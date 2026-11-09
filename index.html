@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MIST-ique AI — Smart Pattern CAD, BOM & Couture SaaS Studio</title>
+  <meta name="theme-color" content="#4A0E17" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MIST-ique AI" />
+  <link id="pwaFaviconLink" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%234A0E17'/%3E%3Crect x='8' y='8' width='104' height='104' rx='20' fill='none' stroke='%23D4AF37' stroke-width='4'/%3E%3Ctext x='60' y='80' font-family='Georgia,serif' font-size='68' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link id="pwaAppleIconLink" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%234A0E17'/%3E%3Ctext x='60' y='80' font-family='Georgia,serif' font-size='68' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
+  <link id="pwaManifestLink" rel="manifest" href="" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -82,8 +90,18 @@
         </div>
       </div>
 
-      <!-- Right Action Controls: Upgrade to Pro & User Profile -->
+      <!-- Right Action Controls: Install App, Upgrade to Pro & User Profile -->
       <div class="flex items-center gap-2 order-2 lg:order-3">
+        <button
+          id="installPwaAppBtn"
+          type="button"
+          class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-emerald-200 font-bold text-xs px-3 py-2 rounded-xl shadow flex items-center gap-1.5 transition"
+          title="Install MIST-ique AI Studio App on your phone or laptop"
+        >
+          <span>📲</span>
+          <span id="installPwaBtnText">Install App</span>
+        </button>
+
         <button
           id="openPricingModalBtn"
           type="button"
@@ -655,6 +673,67 @@
         <div class="flex gap-2">
           <button id="printBomBtn" type="button" class="bg-[#4A0E17] text-white font-bold text-xs px-4 py-2 rounded-xl">🖨️ Print / Save PDF</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 4: ZERO-WARNING NATIVE PWA APP INSTALLER (ANDROID / iOS / DESKTOP)  -->
+  <!-- ========================================================================= -->
+  <div id="pwaInstallGuideModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-[#D4AF37]">
+      <div class="maroon-gradient text-white px-5 py-4 flex items-center justify-between border-b border-[#D4AF37]/30">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#9A7B1C] flex items-center justify-center text-[#2B070D] font-extrabold text-lg shadow">
+            M
+          </div>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-emerald-300 font-bold">Google SSL Verified • Zero APK Warning</span>
+            <h3 class="serif-heading text-base font-bold">Install MIST-ique AI App</h3>
+          </div>
+        </div>
+        <button id="closePwaGuideModalBtn" type="button" class="text-white/80 hover:text-white font-bold text-lg">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs text-gray-700">
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-emerald-900 flex items-start gap-2.5">
+          <span class="text-base">🛡️</span>
+          <div>
+            <p class="font-bold">100% Safe Instant Cloud App (PWA)</p>
+            <p class="text-[11px] mt-0.5">No .apk file download required! Installs directly onto your phone's Home Screen as a verified full-screen app with zero security warnings.</p>
+          </div>
+        </div>
+
+        <div id="pwaNativeTriggerBox" class="hidden">
+          <button id="triggerNativeInstallNowBtn" type="button" class="w-full bg-[#4A0E17] hover:bg-[#6B1422] text-[#D4AF37] font-extrabold py-3 rounded-xl shadow-lg text-sm flex items-center justify-center gap-2 transition">
+            <span>📲</span>
+            <span>Tap Here to Install App Instantly</span>
+          </button>
+        </div>
+
+        <div class="space-y-2.5">
+          <div class="bg-[#FAF6F0] border border-[#6B1422]/15 rounded-xl p-3">
+            <p class="font-bold text-[#4A0E17] mb-1">🤖 Android (Chrome Browser):</p>
+            <ol class="list-decimal list-inside space-y-1 text-[11px] text-gray-700">
+              <li>Tap the <strong>3 Dots (⋮)</strong> menu in the top-right corner.</li>
+              <li>Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.</li>
+              <li>Tap <strong>Install</strong> — the MIST-ique AI icon will appear on your Home Screen!</li>
+            </ol>
+          </div>
+
+          <div class="bg-[#FAF6F0] border border-[#6B1422]/15 rounded-xl p-3">
+            <p class="font-bold text-[#4A0E17] mb-1">🍎 iPhone / iPad (Safari):</p>
+            <ol class="list-decimal list-inside space-y-1 text-[11px] text-gray-700">
+              <li>Tap the <strong>Share button (📤)</strong> at the bottom bar.</li>
+              <li>Scroll down and tap <strong>"Add to Home Screen" (➕)</strong>.</li>
+              <li>Tap <strong>Add</strong> in the top-right corner!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 bg-gray-100 flex items-center justify-end">
+        <button id="gotItPwaBtn" type="button" class="bg-[#4A0E17] text-white font-bold text-xs px-5 py-2 rounded-xl">Got It ✓</button>
       </div>
     </div>
   </div>
@@ -2712,8 +2791,122 @@
       document.getElementById("vaultMessageInput").addEventListener("keydown", (e) => {
         if (e.key === "Enter") sendVaultMsg();
       });
+      // =========================================================================
+      // 7. PROGRESSIVE WEB APP (PWA) ENGINE — DYNAMIC MANIFEST & 1-TAP INSTALL
+      // =========================================================================
+      let deferredPwaPrompt = null;
+
+      function generatePwaIconDataUrl(size) {
+        try {
+          const c = document.createElement("canvas");
+          c.width = size;
+          c.height = size;
+          const ctx = c.getContext("2d");
+          // Royal Maroon rounded background
+          ctx.fillStyle = "#4A0E17";
+          ctx.fillRect(0, 0, size, size);
+          // Gold border frame
+          ctx.strokeStyle = "#D4AF37";
+          ctx.lineWidth = Math.max(4, Math.floor(size * 0.04));
+          ctx.strokeRect(size * 0.06, size * 0.06, size * 0.88, size * 0.88);
+          // Luxury Serif 'M' Monogram
+          ctx.fillStyle = "#D4AF37";
+          ctx.font = `bold ${Math.floor(size * 0.56)}px Georgia, serif`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("M", size / 2, size * 0.53);
+          return c.toDataURL("image/png");
+        } catch (e) {
+          return "";
+        }
+      }
+
+      function initDynamicPwaManifest() {
+        try {
+          const icon192 = generatePwaIconDataUrl(192);
+          const icon512 = generatePwaIconDataUrl(512);
+          if (icon192) {
+            const appleLink = document.getElementById("pwaAppleIconLink");
+            if (appleLink) appleLink.href = icon192;
+          }
+          const manifestObj = {
+            name: "MIST-ique AI — Couture & Pattern CAD Studio",
+            short_name: "MIST-ique AI",
+            description: "Smart Pattern CAD, Kali Yardage, BOM Costing & Couture Portfolio Studio",
+            start_url: window.location.href.split("#")[0],
+            scope: "./",
+            display: "standalone",
+            orientation: "portrait-primary",
+            background_color: "#2B070D",
+            theme_color: "#4A0E17",
+            icons: [
+              { src: icon192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+              { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+            ]
+          };
+          const blob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
+          const manifestUrl = URL.createObjectURL(blob);
+          const linkEl = document.getElementById("pwaManifestLink");
+          if (linkEl) linkEl.setAttribute("href", manifestUrl);
+        } catch (err) {
+          console.warn("PWA manifest setup notice:", err);
+        }
+      }
+      initDynamicPwaManifest();
+
+      // Detect if already running as installed standalone app
+      if (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) {
+        const btnTxt = document.getElementById("installPwaBtnText");
+        if (btnTxt) btnTxt.textContent = "App Installed ✓";
+      }
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+        const nativeBox = document.getElementById("pwaNativeTriggerBox");
+        if (nativeBox) nativeBox.classList.remove("hidden");
+      });
+
+      window.addEventListener("appinstalled", () => {
+        deferredPwaPrompt = null;
+        const btnTxt = document.getElementById("installPwaBtnText");
+        if (btnTxt) btnTxt.textContent = "App Installed ✓";
+        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
+        showToast("🎉 MIST-ique AI App installed on your Home Screen!");
+      });
+
+      document.getElementById("installPwaAppBtn").addEventListener("click", async () => {
+        if (deferredPwaPrompt) {
+          deferredPwaPrompt.prompt();
+          const { outcome } = await deferredPwaPrompt.userChoice;
+          if (outcome === "accepted") {
+            deferredPwaPrompt = null;
+          }
+        } else {
+          document.getElementById("pwaInstallGuideModal").classList.remove("hidden");
+        }
+      });
+
+      document.getElementById("triggerNativeInstallNowBtn").addEventListener("click", async () => {
+        if (deferredPwaPrompt) {
+          deferredPwaPrompt.prompt();
+          const { outcome } = await deferredPwaPrompt.userChoice;
+          if (outcome === "accepted") {
+            deferredPwaPrompt = null;
+            document.getElementById("pwaInstallGuideModal").classList.add("hidden");
+          }
+        }
+      });
+
+      document.getElementById("closePwaGuideModalBtn").addEventListener("click", () => {
+        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
+      });
+      document.getElementById("gotItPwaBtn").addEventListener("click", () => {
+        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
+      });
+
       // Backdrop click dismissal for standard modals
-      ["profileAuthModal", "pricingGatewayModal", "bomSheetModal", "masterAdminModal"].forEach(modalId => {
+      ["profileAuthModal", "pricingGatewayModal", "bomSheetModal", "masterAdminModal", "pwaInstallGuideModal"].forEach(modalId => {
         const modal = document.getElementById(modalId);
         if (modal) {
           modal.addEventListener("click", (e) => {
