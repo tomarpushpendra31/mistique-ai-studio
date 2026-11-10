@@ -4,17 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MIST-ique AI — Smart Pattern CAD, BOM & Couture SaaS Studio</title>
-  <meta name="theme-color" content="#4A0E17" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="MIST-ique AI" />
-  <link id="pwaFaviconLink" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%234A0E17'/%3E%3Crect x='8' y='8' width='104' height='104' rx='20' fill='none' stroke='%23D4AF37' stroke-width='4'/%3E%3Ctext x='60' y='80' font-family='Georgia,serif' font-size='68' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
-  <link id="pwaAppleIconLink" rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%234A0E17'/%3E%3Ctext x='60' y='80' font-family='Georgia,serif' font-size='68' font-weight='bold' fill='%23D4AF37' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E" />
-  <link id="pwaManifestLink" rel="manifest" href="" />
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; background-color: #FAF6F0; color: #1F1215; }
@@ -37,9 +28,9 @@
       <div class="flex items-center gap-3">
         <span class="inline-flex items-center gap-1.5 bg-[#4A0E17] border border-[#D4AF37]/40 px-2.5 py-0.5 rounded-full text-[11px] font-medium text-[#D4AF37]">
           <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
-          MIST-ique Cloud Studio: Live Connected
+          Supabase (Tomars Lab): Live Connected
         </span>
-        <span class="hidden sm:inline text-white/75">Instant Studio Sync: <strong id="cacheStatusBadge" class="text-[#D4AF37]">Active (0ms Lag)</strong></span>
+        <span class="hidden sm:inline text-white/75">IndexedDB Local Cache: <strong id="cacheStatusBadge" class="text-[#D4AF37]">Active (0ms Lag)</strong></span>
       </div>
       <div class="flex items-center gap-3">
         <span id="partnerBadgeTop" class="bg-amber-500/15 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded text-[11px] font-semibold">
@@ -71,13 +62,13 @@
         </div>
       </div>
 
-      <!-- AI Search & Prompt Bar -->
+      <!-- AI Search & Prompt Bar (Also stealth trigger for 0507) -->
       <div class="flex-1 max-w-md mx-auto w-full order-3 lg:order-2">
         <div class="relative flex items-center">
           <input
             id="aiPromptInput"
             type="text"
-            placeholder="Ask fashion/fabric question or garment concept (e.g. Silk lehenga meterage, Zardozi care)..."
+            placeholder="Describe a garment, fabric spec, or enter studio code..."
             class="w-full bg-white/10 hover:bg-white/15 focus:bg-white text-white focus:text-[#2B070D] placeholder-[#F5E6C8]/60 text-xs sm:text-sm rounded-l-xl px-3.5 py-2 border border-[#D4AF37]/40 focus:outline-none transition"
           />
           <button
@@ -90,18 +81,8 @@
         </div>
       </div>
 
-      <!-- Right Action Controls: Install App, Upgrade to Pro & User Profile -->
+      <!-- Right Action Controls: Upgrade to Pro & User Profile -->
       <div class="flex items-center gap-2 order-2 lg:order-3">
-        <button
-          id="installPwaAppBtn"
-          type="button"
-          class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-emerald-200 font-bold text-xs px-3 py-2 rounded-xl shadow flex items-center gap-1.5 transition"
-          title="Install MIST-ique AI Studio App on your phone or laptop"
-        >
-          <span>📲</span>
-          <span id="installPwaBtnText">Install App</span>
-        </button>
-
         <button
           id="openPricingModalBtn"
           type="button"
@@ -129,8 +110,11 @@
           <button type="button" data-tab="all" class="module-tab-btn bg-[#D4AF37] text-[#2B070D] font-bold text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">
             🏛️ All Studio Modules
           </button>
+          <button type="button" data-tab="foundation" class="module-tab-btn text-amber-300 bg-white/10 hover:bg-white/20 border border-amber-400/30 font-bold text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">
+            🎓 1st Year Foundation Lab (Croquis • Color • Swatch)
+          </button>
           <button type="button" data-tab="cad" class="module-tab-btn text-[#F5E6C8]/85 hover:bg-white/10 font-medium text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">
-            📐 Kali CAD & BOM Engine
+            📐 Senior Kali CAD & BOM
           </button>
           <button type="button" data-tab="vision" class="module-tab-btn text-[#F5E6C8]/85 hover:bg-white/10 font-medium text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap">
             🎨 Photo RGB & Pantone Scanner
@@ -159,43 +143,38 @@
     </div>
   </header>
 
-  <!-- AI FASHION ASSISTANT & COUTURE ADVISOR (Dynamic Interactive Studio) -->
-  <div id="aiSpecOutputBanner" class="hidden bg-gradient-to-r from-[#380814] via-[#4A0E17] to-[#2B070D] text-white border-b-2 border-[#D4AF37]/60 px-4 py-4 shadow-xl">
+  <!-- AI COUTURE MENTOR & INTELLIGENT ANSWER PANEL (Dynamic Live AI + Syllabus Engine) -->
+  <div id="aiSpecOutputBanner" class="hidden bg-gradient-to-r from-[#2B070D] via-[#4A0E17] to-[#23060B] text-white border-b-2 border-[#D4AF37] px-4 py-4 shadow-2xl">
     <div class="max-w-7xl mx-auto space-y-3">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between border-b border-white/15 pb-2">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] animate-pulse"></span>
-          <span class="text-xs uppercase tracking-widest text-[#D4AF37] font-extrabold font-mono">✨ MIST-ique AI Fashion Advisor &amp; Couture Expert</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
+          <span id="aiEngineModeTag" class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-extrabold">
+            ✨ MIST-ique AI Couture &amp; Syllabus Mentor Answer
+          </span>
         </div>
-        <button id="closeAiBannerBtn" type="button" class="text-xs text-[#D4AF37] hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-lg transition font-medium">Dismiss ✕</button>
-      </div>
-      
-      <!-- Question & Structured Answer Card -->
-      <div class="bg-black/40 border border-[#D4AF37]/30 rounded-xl p-3.5 space-y-2">
-        <div class="flex items-center gap-2 text-xs text-[#F5E6C8]/80 font-mono">
-          <span class="text-[#D4AF37] font-bold">Query:</span>
-          <span id="aiQueryEchoText" class="font-semibold text-white"></span>
-        </div>
-        <div id="aiSpecResultText" class="text-xs sm:text-sm text-[#FAF6F0] leading-relaxed whitespace-pre-line"></div>
+        <button id="closeAiBannerBtn" type="button" class="text-xs bg-white/10 hover:bg-white/20 text-[#D4AF37] font-bold px-2.5 py-1 rounded-lg transition">
+          Close Answer ✕
+        </button>
       </div>
 
-      <!-- Quick Suggested Follow-up Questions for Students -->
-      <div class="flex flex-wrap items-center gap-2 text-[11px] pt-1 border-t border-white/10">
-        <span class="text-[#D4AF37] font-mono text-[10px] uppercase">Quick Prompts:</span>
-        <button type="button" class="ai-quick-query-btn bg-white/5 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg px-2.5 py-1 text-[#F5E6C8] transition">
-          👗 How many types of lehengas?
+      <!-- Main AI Answer Body -->
+      <div id="aiSpecResultText" class="text-xs sm:text-sm text-[#FAF6F0] leading-relaxed space-y-2"></div>
+
+      <!-- Quick Sample Questions for 1st Year & Senior Students -->
+      <div class="pt-2 border-t border-white/10 flex flex-wrap items-center gap-1.5 text-[11px]">
+        <span class="text-[#D4AF37] font-bold mr-1">💡 Try asking AI:</span>
+        <button type="button" data-ai-q="How to draw 9-head croquis on A4 sheet for 1st year?" class="ai-quick-q-btn bg-white/10 hover:bg-[#D4AF37] hover:text-[#2B070D] text-[#F5E6C8] px-2.5 py-1 rounded-full transition">
+          9-Head Croquis Tips
         </button>
-        <button type="button" class="ai-quick-query-btn bg-white/5 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg px-2.5 py-1 text-[#F5E6C8] transition">
-          🧵 Bridal Lehenga yardage formula?
+        <button type="button" data-ai-q="20 kali royal blue velvet bridal lehenga waist 32 length 44" class="ai-quick-q-btn bg-white/10 hover:bg-[#D4AF37] hover:text-[#2B070D] text-[#F5E6C8] px-2.5 py-1 rounded-full transition">
+          20-Kali Blue Velvet Lehenga
         </button>
-        <button type="button" class="ai-quick-query-btn bg-white/5 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg px-2.5 py-1 text-[#F5E6C8] transition">
-          ✨ Zari &amp; Zardozi embroidery care?
+        <button type="button" data-ai-q="Difference between Georgette, Chiffon and Organza for swatch file" class="ai-quick-q-btn bg-white/10 hover:bg-[#D4AF37] hover:text-[#2B070D] text-[#F5E6C8] px-2.5 py-1 rounded-full transition">
+          Georgette vs Organza
         </button>
-        <button type="button" class="ai-quick-query-btn bg-white/5 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg px-2.5 py-1 text-[#F5E6C8] transition">
-          📐 44" vs 58" Panna fabric difference?
-        </button>
-        <button type="button" class="ai-quick-query-btn bg-white/5 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-lg px-2.5 py-1 text-[#F5E6C8] transition">
-          🎨 Trending bridal color palettes 2026?
+        <button type="button" data-ai-q="Best complementary color combination for pastel pink bridal outfit" class="ai-quick-q-btn bg-white/10 hover:bg-[#D4AF37] hover:text-[#2B070D] text-[#F5E6C8] px-2.5 py-1 rounded-full transition">
+          Pastel Pink Color Scheme
         </button>
       </div>
     </div>
@@ -208,7 +187,7 @@
     <section id="savedProfileSpecsSection" class="bg-white rounded-2xl p-4 border border-[#6B1422]/15 shadow-sm">
       <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-bold text-[#4A0E17]">🗂️ My Saved Garment & Pattern Specs</span>
+          <span class="text-sm font-bold text-[#4A0E17]">🗂️ My Saved Cloud & IndexedDB Specs</span>
           <span id="savedSpecsUserTag" class="text-xs bg-[#FAF6F0] text-[#6B1422] px-2.5 py-0.5 rounded-full border border-[#6B1422]/20 font-medium">
             Guest Session (Login with PIN to sync across devices)
           </span>
@@ -216,6 +195,155 @@
         <button id="clearSavedSpecsBtn" type="button" class="text-xs text-rose-700 hover:underline font-medium">Clear Local Cache</button>
       </div>
       <div id="savedSpecsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- MODULE 00 (NEW): 1ST YEAR FOUNDATION STUDIO (CROQUIS, COLOR & SWATCH) -->
+    <!-- Specifically designed so Faculty & 1st Year Students immediately adopt -->
+    <!-- ===================================================================== -->
+    <section id="sectionFoundationModule" class="bg-white rounded-2xl border-2 border-[#D4AF37]/60 gold-glow overflow-hidden">
+      <div class="maroon-gradient text-white px-5 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#D4AF37]/40">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="bg-[#D4AF37] text-[#2B070D] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              ★ Semester 1 &amp; 2 Syllabus Special
+            </span>
+            <span class="text-[11px] text-[#F5E6C8]/90 font-medium">Fashion Illustration • Elements of Design • Textile Science</span>
+          </div>
+          <h2 class="serif-heading text-xl font-bold mt-1">🎓 1st Year Foundation Studio: 9-Head Croquis, Color Harmony &amp; Swatch File Assistant</h2>
+        </div>
+        <span class="text-xs bg-white/10 border border-[#D4AF37]/40 px-3 py-1.5 rounded-xl text-[#F5E6C8] font-semibold">
+          ✅ Approved for 1st Year Practical Assignments
+        </span>
+      </div>
+
+      <div class="p-5 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-gradient-to-b from-[#FAF6F0]/70 to-white">
+
+        <!-- SUB-TOOL 1: 9-HEAD / 10-HEAD FASHION CROQUIS PROPORTION CALCULATOR & SVG BLUEPRINT (5 COLS) -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-4 border border-[#6B1422]/15 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+              <div>
+                <span class="text-[10px] font-bold uppercase text-[#6B1422] tracking-wider">Tool 01 • Fashion Illustration</span>
+                <h3 class="text-sm font-extrabold text-[#4A0E17]">🧍‍♀️ 9-Head &amp; 10-Head Croquis Ruler Engine</h3>
+              </div>
+              <span id="croquisHeadUnitBadge" class="text-[11px] font-mono bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">
+                1 Head = 1.05"
+              </span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 text-xs">
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Drawing Sheet Size</label>
+                <select id="croquisSheetSelect" class="w-full rounded-xl border border-gray-300 px-2.5 py-1.5 font-bold text-[#4A0E17] bg-[#FAF6F0] focus:outline-none">
+                  <option value="9.5" selected>A4 Sheet (9.5" Figure Height)</option>
+                  <option value="14.0">A3 Sheet (14.0" Figure Height)</option>
+                  <option value="18.0">Imperial Sheet (18.0" Height)</option>
+                  <option value="11.0">Custom 11.0" Sketchbook</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Syllabus Proportion</label>
+                <select id="croquisScaleSelect" class="w-full rounded-xl border border-gray-300 px-2.5 py-1.5 font-bold text-[#4A0E17] bg-[#FAF6F0] focus:outline-none">
+                  <option value="9" selected>9-Head Standard (1st Yr)</option>
+                  <option value="10">10-Head High Couture</option>
+                  <option value="8">8-Head Commercial Ready-to-Wear</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Interactive SVG Mannequin + Exact Ruler Table -->
+            <div class="grid grid-cols-12 gap-3 items-center bg-[#23060B] text-white rounded-xl p-3 border border-[#D4AF37]/40">
+              <div class="col-span-5 flex justify-center">
+                <svg id="croquisSvgCanvas" viewBox="0 0 140 260" class="w-full h-52 bg-[#160306] rounded-lg border border-white/10"></svg>
+              </div>
+              <div class="col-span-7 space-y-1 text-[11px] font-mono" id="croquisRulerList">
+                <!-- Populated dynamically by JS -->
+              </div>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-gray-500 bg-[#FAF6F0] px-3 py-2 rounded-xl border border-gray-200">
+            💡 <strong>1st Year Tip:</strong> Scale rakh kar upar diye gaye exact inch marks apni A4/A3 sheet par lagao—Shoulder, Waist, Hip aur Knee kabhi galat nahi honge!
+          </p>
+        </div>
+
+        <!-- SUB-TOOL 2: SYLLABUS COLOR WHEEL HARMONY GENERATOR (4 COLS) -->
+        <div class="lg:col-span-4 bg-white rounded-2xl p-4 border border-[#6B1422]/15 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-2">
+              <div>
+                <span class="text-[10px] font-bold uppercase text-[#6B1422] tracking-wider">Tool 02 • Elements of Design</span>
+                <h3 class="text-sm font-extrabold text-[#4A0E17]">🎨 Syllabus Color Harmony Generator</h3>
+              </div>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Click Hex to Copy</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 text-xs">
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Pick Base Garment Color</label>
+                <div class="flex items-center gap-2 bg-[#FAF6F0] border border-gray-300 rounded-xl px-2.5 py-1">
+                  <input id="harmonyBaseColorPicker" type="color" value="#6B1422" class="w-7 h-7 rounded cursor-pointer border-0 bg-transparent" />
+                  <span id="harmonyBaseHexLabel" class="font-mono font-bold text-xs text-[#4A0E17]">#6B1422</span>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Harmony Rule</label>
+                <select id="harmonyRuleSelect" class="w-full rounded-xl border border-gray-300 px-2.5 py-2 font-bold text-[#4A0E17] bg-[#FAF6F0] focus:outline-none">
+                  <option value="all" selected>All 4 Syllabus Schemes</option>
+                  <option value="complementary">Complementary (Opposite)</option>
+                  <option value="analogous">Analogous (Adjacent)</option>
+                  <option value="triadic">Triadic (3-Point Triangle)</option>
+                  <option value="monochromatic">Monochromatic (Tints &amp; Shades)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Generated Schemes Container -->
+            <div id="colorHarmonyOutputGrid" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+              <!-- Populated dynamically by JS -->
+            </div>
+          </div>
+
+          <p class="text-[11px] text-gray-500 bg-[#FAF6F0] px-3 py-2 rounded-xl border border-gray-200">
+            🎨 <strong>Color Theory Assignment:</strong> Koi bhi base shade chuno—Complementary, Analogous, Triadic aur Monochromatic चारों schemes ke exact swatches turant taiyar!
+          </p>
+        </div>
+
+        <!-- SUB-TOOL 3: 1ST YEAR TEXTILE SWATCH FILE ENCYCLOPEDIA & CHEAT-SHEET (3 COLS) -->
+        <div class="lg:col-span-3 bg-white rounded-2xl p-4 border border-[#6B1422]/15 shadow-sm flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="border-b border-gray-100 pb-2">
+              <span class="text-[10px] font-bold uppercase text-[#6B1422] tracking-wider">Tool 03 • Textile Science Lab</span>
+              <h3 class="text-sm font-extrabold text-[#4A0E17]">🧵 Swatch File Practical Cheat-Sheet</h3>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Select Fabric Swatch</label>
+              <select id="swatchFabricSelect" class="w-full rounded-xl border border-gray-300 px-3 py-2 text-xs font-bold text-[#4A0E17] bg-[#FAF6F0] focus:outline-none">
+                <option value="georgette" selected>1. Pure Silk Georgette</option>
+                <option value="organza">2. Silk Organza (Stiff Sheer)</option>
+                <option value="brocade">3. Banarasi Zari Brocade</option>
+                <option value="chiffon">4. Crepe Chiffon</option>
+                <option value="velvet">5. Royal Micro Velvet (9000)</option>
+                <option value="cotton_poplin">6. Cambric / Cotton Poplin</option>
+                <option value="tussar">7. Bhagalpuri Tussar Silk</option>
+                <option value="chanderi">8. Handloom Chanderi Tissue</option>
+              </select>
+            </div>
+
+            <!-- Swatch Practical File Card -->
+            <div id="swatchDetailCard" class="bg-[#FAF6F0] rounded-xl p-3.5 border border-[#6B1422]/20 space-y-2 text-xs">
+              <!-- Populated dynamically by JS -->
+            </div>
+          </div>
+
+          <button id="copySwatchNotesBtn" type="button" class="w-full bg-[#4A0E17] hover:bg-[#6B1422] text-white font-bold text-xs py-2.5 rounded-xl shadow transition">
+            📋 Copy Notes for Swatch File
+          </button>
+        </div>
+
+      </div>
     </section>
 
     <!-- TOP GRID: MODULE 1 (KALI CAD & BOM) + MODULE 2 (RGB VISION & COMPRESSION) -->
@@ -329,7 +457,7 @@
             <h2 class="serif-heading text-lg font-bold">Sketch RGB Scanner & Image Compressor</h2>
           </div>
           <span class="text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded font-semibold">
-            HD Studio Scanner
+            150–300 KB Auto-Opt
           </span>
         </div>
 
@@ -357,11 +485,11 @@
             <!-- Client-Side Compression & Storage Telemetry Bar -->
             <div class="bg-slate-900 text-slate-100 rounded-xl p-3 text-xs flex flex-wrap items-center justify-between gap-2 border border-slate-700">
               <div>
-                <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold block">Smart Fabric & Color Analysis</span>
+                <span class="text-[10px] uppercase tracking-wider text-amber-400 font-bold block">Client-Side Image Compression Pipeline</span>
                 <span id="compressionStatsText" class="font-mono text-[11px] text-emerald-300">Raw: 2.84 MB ➔ Compressed WebP: 194 KB (93.1% saved)</span>
               </div>
               <span class="bg-slate-800 text-slate-300 px-2 py-1 rounded text-[10px] font-mono border border-slate-600">
-                Studio Ready ✓
+                IndexedDB Cached ✓
               </span>
             </div>
 
@@ -395,7 +523,7 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot"></span>
-            <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold">Live Designer Showcase • #india-couture-feed</span>
+            <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold">WebSockets / Supabase Realtime Channel: #india-couture-feed</span>
           </div>
           <h2 class="serif-heading text-xl font-bold mt-0.5">Live Designer Lookbook & Instant Classroom Sync</h2>
         </div>
@@ -422,7 +550,7 @@
       <!-- Publish New Portfolio Card Form (Collapsible) -->
       <div id="publishPortfolioDrawer" class="hidden bg-[#FAF6F0] p-5 border-b border-[#6B1422]/15 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-sm font-bold text-[#4A0E17]">📸 Publish Student Sketch / Garment Photo</h3>
+          <h3 class="text-sm font-bold text-[#4A0E17]">📸 Publish Student Sketch / Garment Photo (Edge WebP Auto-Compression + Supabase Bucket Upload)</h3>
           <span id="compressionLiveBadge" class="text-[11px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-full font-semibold">
             Ready: Select Camera/Gallery Photo (5MB → ~160KB WebP)
           </span>
@@ -450,7 +578,7 @@
           <button type="button" data-filter="AIFT" class="feed-filter-btn bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-full font-medium hover:bg-gray-50">AIFT Mathura Partner</button>
           <button type="button" data-filter="BOUTIQUE" class="feed-filter-btn bg-white text-gray-700 border border-gray-300 px-3 py-1 rounded-full font-medium hover:bg-gray-50">Verified Pro Boutiques</button>
         </div>
-        <span class="text-gray-500 font-mono text-[11px]" id="feedCountLabel">Showing 3 live designs</span>
+        <span class="text-gray-500 font-mono text-[11px]" id="feedCountLabel">Showing 3 live cached items (Lazy-Loaded)</span>
       </div>
 
       <!-- Portfolio Cards Grid -->
@@ -488,39 +616,91 @@
         <button id="closeProfileModalBtn" type="button" class="text-white/80 hover:text-white text-lg font-bold">✕</button>
       </div>
 
-      <!-- Auth Mode Tabs: 1. Email + Password / OTP (Live Cloud) | 2. Campus Quick PIN -->
-      <div class="flex border-b border-gray-200 bg-[#FAF6F0] text-xs font-bold text-center">
-        <button id="tabAuthOtpBtn" type="button" class="flex-1 py-2.5 border-b-2 border-[#4A0E17] text-[#4A0E17] bg-white transition">
-          ✉️ Email &amp; Password Login
+      <!-- Auth Mode Tabs: 1. Email+Password (Zero Limit) | 2. Email OTP | 3. Campus PIN -->
+      <div class="flex border-b border-gray-200 bg-[#FAF6F0] text-[11px] font-bold text-center">
+        <button id="tabAuthPassBtn" type="button" class="flex-1 py-2.5 border-b-2 border-[#4A0E17] text-[#4A0E17] bg-white transition">
+          🔐 Email &amp; Password
+        </button>
+        <button id="tabAuthOtpBtn" type="button" class="flex-1 py-2.5 text-gray-600 hover:text-gray-900 border-b-2 border-transparent transition">
+          ✉️ Email OTP
         </button>
         <button id="tabAuthPinBtn" type="button" class="flex-1 py-2.5 text-gray-600 hover:text-gray-900 border-b-2 border-transparent transition">
-          🔑 Campus Partner PIN
+          🔑 Campus PIN
         </button>
       </div>
 
       <div class="p-5 space-y-4 text-xs sm:text-sm overflow-y-auto">
-        <!-- MODE 1: SUPABASE EMAIL + PASSWORD SECTION -->
-        <div id="authEmailOtpSection" class="space-y-3.5">
+        <!-- MODE 0: INSTAGRAM/FB STYLE EMAIL + PASSWORD SIGN UP / LOG IN (NO EMAIL RATE LIMIT!) -->
+        <div id="authEmailPassSection" class="space-y-3">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold text-gray-700 uppercase mb-1">Full Name (For Sign Up)</label>
+              <input id="passFullNameInput" type="text" placeholder="e.g., Ananya Sharma" class="w-full rounded-xl border border-gray-300 px-3 py-2 text-xs font-medium bg-white focus:border-[#6B1422] focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-gray-700 uppercase mb-1">Batch / Year</label>
+              <select id="passYearSelect" class="w-full rounded-xl border border-gray-300 px-2.5 py-2 text-xs font-bold text-[#4A0E17] bg-white focus:outline-none">
+                <option value="AIFT 1st Year Foundation">1st Year Foundation</option>
+                <option value="AIFT 2nd Year">2nd Year Diploma/B.Sc</option>
+                <option value="AIFT Senior Batch">3rd / Final Year</option>
+                <option value="Faculty / Boutique">Faculty / Boutique Pro</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-gray-700 uppercase mb-1">Email Address</label>
+            <input id="passEmailInput" type="email" placeholder="yourname@gmail.com" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 text-xs sm:text-sm font-medium bg-white focus:border-[#6B1422] focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-gray-700 uppercase mb-1">Password (Min 6 Characters)</label>
+            <input id="passPasswordInput" type="password" placeholder="••••••••" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 text-xs sm:text-sm font-medium bg-white focus:border-[#6B1422] focus:outline-none" />
+          </div>
+          <p id="passAuthStatusMsg" class="text-[11px] text-gray-500">
+            ✨ Pehli baar aaye hain toh <strong>Create Account</strong> dabayein, warna <strong>Log In</strong> karein (Zero OTP Limit!).
+          </p>
+          <div class="grid grid-cols-2 gap-2.5 pt-1">
+            <button id="btnPassLogin" type="button" class="bg-[#4A0E17] hover:bg-[#6B1422] text-white font-bold py-2.5 rounded-xl shadow text-xs transition">
+              🔐 Log In Existing
+            </button>
+            <button id="btnPassSignup" type="button" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl shadow text-xs transition">
+              ✨ Create New Account
+            </button>
+          </div>
+        </div>
+
+        <!-- MODE 1: SUPABASE EMAIL OTP SECTION -->
+        <div id="authEmailOtpSection" class="hidden space-y-3.5">
           <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Your Email Address</label>
-            <input id="authEmailInput" type="email" placeholder="student@gmail.com / designer@aift.edu" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 font-medium focus:border-[#6B1422] focus:outline-none bg-white text-xs sm:text-sm" />
+            <div class="flex gap-2">
+              <input id="authEmailInput" type="email" placeholder="student@gmail.com / designer@aift.edu" class="flex-1 rounded-xl border border-gray-300 px-3.5 py-2 font-medium focus:border-[#6B1422] focus:outline-none bg-white text-xs sm:text-sm" />
+              <button id="sendEmailOtpBtn" type="button" class="bg-[#4A0E17] hover:bg-[#6B1422] text-white font-bold text-xs px-3.5 py-2 rounded-xl transition whitespace-nowrap shadow">
+                Send OTP 📩
+              </button>
+            </div>
+            <p id="otpSentStatusMsg" class="text-[11px] text-gray-500 mt-1.5">
+              Instagram/Facebook jaisa 6-digit OTP aapke email inbox mein aayega.
+            </p>
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Password</label>
-            <input id="authPasswordInput" type="password" placeholder="Enter password" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 font-medium focus:border-[#6B1422] focus:outline-none bg-white text-xs sm:text-sm" />
+          <!-- OTP Input Drawer (Appears after clicking Send OTP) -->
+          <div id="otpInputDrawer" class="hidden bg-emerald-50 border border-emerald-300 rounded-xl p-3.5 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-900">Enter 6-Digit OTP from Email:</span>
+              <span id="otpCountdownTimer" class="text-[11px] font-mono text-emerald-700 font-bold">Valid for 10m</span>
+            </div>
+            <div class="flex gap-2">
+              <input id="authOtpCodeInput" type="text" maxlength="8" placeholder="e.g. 849201" class="flex-1 rounded-xl border border-emerald-400 px-3.5 py-2 font-mono font-black text-center text-base tracking-widest text-emerald-950 bg-white focus:outline-none" />
+              <button id="verifyOtpLoginBtn" type="button" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs px-4 py-2 rounded-xl transition shadow">
+                Verify & Log In 🚀
+              </button>
+            </div>
+            <p class="text-[11px] text-emerald-800">Ek baar login hone ke baad aapka account hamesha saved rahega!</p>
           </div>
 
           <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Designer Display Name (Optional)</label>
             <input id="authEmailNameInput" type="text" placeholder="e.g., Ananya Sharma" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 font-medium focus:border-[#6B1422] focus:outline-none text-xs sm:text-sm bg-white" />
-          </div>
-
-          <div class="pt-1">
-            <button id="emailPasswordAuthBtn" type="button" class="w-full bg-[#4A0E17] hover:bg-[#6B1422] text-white font-bold py-2.5 rounded-xl transition shadow text-xs sm:text-sm">
-              Login / Sign Up 🚀
-            </button>
-            <p id="otpSentStatusMsg" class="text-[11px] text-gray-500 mt-1.5 text-center"></p>
           </div>
         </div>
 
@@ -536,9 +716,9 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-gray-700 uppercase mb-1">4-Digit Student / Partner Access PIN</label>
-            <input id="authPinInput" type="password" maxlength="8" placeholder="Enter 4-digit passkey" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 font-mono font-bold tracking-widest text-[#4A0E17] focus:border-[#6B1422] focus:outline-none text-xs sm:text-sm bg-white" />
+            <input id="authPinInput" type="password" maxlength="8" placeholder="Enter 4-digit PIN (e.g., 1024, 2048)" class="w-full rounded-xl border border-gray-300 px-3.5 py-2 font-mono font-bold tracking-widest text-[#4A0E17] focus:border-[#6B1422] focus:outline-none text-xs sm:text-sm bg-white" />
             <p class="text-[11px] text-gray-500 mt-1">
-              Enter your registered 4-digit campus passkey to unlock Pro Studio access.
+              💡 Partner PIN (<code class="font-bold text-[#6B1422]">1024</code> ya <code class="font-bold text-[#6B1422]">AIFTPRO</code>) daalne par ₹499 Pro Plan ₹0 mein unlock ho jata hai.
             </p>
           </div>
           <button id="submitProfileLoginBtn" type="button" class="w-full bg-[#4A0E17] hover:bg-[#6B1422] text-white font-bold py-2.5 rounded-xl shadow text-xs sm:text-sm transition">
@@ -619,7 +799,7 @@
               <p class="text-[11px] text-emerald-800 mt-1">Exclusively for partnered institutes (e.g., <strong>AIFT Global Mathura</strong> Beta Cohort).</p>
               <div class="mt-3">
                 <label class="block text-[10px] font-bold uppercase text-emerald-900 mb-1">Enter 4-Digit Campus VIP Code</label>
-                <input id="campusPromoCodeInput" type="text" placeholder="Enter partner passkey" class="w-full rounded-lg border border-emerald-400 px-2.5 py-1.5 text-xs font-mono font-bold uppercase bg-white" />
+                <input id="campusPromoCodeInput" type="text" placeholder="Code (e.g. 1024, 2048)" class="w-full rounded-lg border border-emerald-400 px-2.5 py-1.5 text-xs font-mono font-bold uppercase bg-white" />
               </div>
             </div>
             <button id="applyCampusCodeBtn" type="button" class="mt-4 w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-2.5 rounded-xl shadow transition">
@@ -678,70 +858,9 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL 4: ZERO-WARNING NATIVE PWA APP INSTALLER (ANDROID / iOS / DESKTOP)  -->
-  <!-- ========================================================================= -->
-  <div id="pwaInstallGuideModal" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-[#D4AF37]">
-      <div class="maroon-gradient text-white px-5 py-4 flex items-center justify-between border-b border-[#D4AF37]/30">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#9A7B1C] flex items-center justify-center text-[#2B070D] font-extrabold text-lg shadow">
-            M
-          </div>
-          <div>
-            <span class="text-[10px] uppercase tracking-widest text-emerald-300 font-bold">Google SSL Verified • Zero APK Warning</span>
-            <h3 class="serif-heading text-base font-bold">Install MIST-ique AI App</h3>
-          </div>
-        </div>
-        <button id="closePwaGuideModalBtn" type="button" class="text-white/80 hover:text-white font-bold text-lg">✕</button>
-      </div>
-
-      <div class="p-5 space-y-4 text-xs text-gray-700">
-        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-emerald-900 flex items-start gap-2.5">
-          <span class="text-base">🛡️</span>
-          <div>
-            <p class="font-bold">100% Safe Instant Cloud App (PWA)</p>
-            <p class="text-[11px] mt-0.5">No .apk file download required! Installs directly onto your phone's Home Screen as a verified full-screen app with zero security warnings.</p>
-          </div>
-        </div>
-
-        <div id="pwaNativeTriggerBox" class="hidden">
-          <button id="triggerNativeInstallNowBtn" type="button" class="w-full bg-[#4A0E17] hover:bg-[#6B1422] text-[#D4AF37] font-extrabold py-3 rounded-xl shadow-lg text-sm flex items-center justify-center gap-2 transition">
-            <span>📲</span>
-            <span>Tap Here to Install App Instantly</span>
-          </button>
-        </div>
-
-        <div class="space-y-2.5">
-          <div class="bg-[#FAF6F0] border border-[#6B1422]/15 rounded-xl p-3">
-            <p class="font-bold text-[#4A0E17] mb-1">🤖 Android (Chrome Browser):</p>
-            <ol class="list-decimal list-inside space-y-1 text-[11px] text-gray-700">
-              <li>Tap the <strong>3 Dots (⋮)</strong> menu in the top-right corner.</li>
-              <li>Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.</li>
-              <li>Tap <strong>Install</strong> — the MIST-ique AI icon will appear on your Home Screen!</li>
-            </ol>
-          </div>
-
-          <div class="bg-[#FAF6F0] border border-[#6B1422]/15 rounded-xl p-3">
-            <p class="font-bold text-[#4A0E17] mb-1">🍎 iPhone / iPad (Safari):</p>
-            <ol class="list-decimal list-inside space-y-1 text-[11px] text-gray-700">
-              <li>Tap the <strong>Share button (📤)</strong> at the bottom bar.</li>
-              <li>Scroll down and tap <strong>"Add to Home Screen" (➕)</strong>.</li>
-              <li>Tap <strong>Add</strong> in the top-right corner!</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-
-      <div class="px-5 py-3 bg-gray-100 flex items-center justify-end">
-        <button id="gotItPwaBtn" type="button" class="bg-[#4A0E17] text-white font-bold text-xs px-5 py-2 rounded-xl">Got It ✓</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
   
   <!-- ========================================================================= -->
-  <!-- MASTER ADMIN CONSOLE & STORAGE MONITOR -->
+  <!-- MASTER ADMIN CONSOLE & STORAGE MONITOR (ACCESSIBLE VIA MASTER KEY: 'ROOT99') -->
   <!-- ========================================================================= -->
   <div id="masterAdminModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
     <div class="bg-[#1A0B0E] border-2 border-[#D4AF37] rounded-2xl max-w-2xl w-full text-white shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
@@ -873,13 +992,16 @@
     </div>
   </div>
 
-<!-- PRIVATE STUDIO ARCHIVE OVERLAY (OBFUSCATED ZERO-TRACE RAM) -->
+<!-- STEALTH VAULT MODAL (ONLY OPENS WHEN CODE '0507' IS ENTERED)              -->
+  <!-- Zero public trace in UI; instant Quick-Hide button restores studio view   -->
+  <!-- ========================================================================= -->
   <div id="stealthVaultOverlay" class="hidden fixed inset-0 z-50 maroon-gradient text-white flex flex-col justify-between p-4 sm:p-8 overflow-y-auto">
     <div class="max-w-2xl mx-auto w-full space-y-6 my-auto">
+      <!-- Top Bar with 0.1s Quick Hide -->
       <div class="flex items-center justify-between border-b border-[#D4AF37]/40 pb-3">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-[#D4AF37] pulse-dot"></span>
-          <span id="vaultTitleBanner" class="serif-heading text-lg font-bold text-[#F5E6C8]">Private Studio Archive</span>
+          <span class="serif-heading text-lg font-bold text-[#F5E6C8]">Royal Maroon Private Vault • #0507</span>
         </div>
         <button
           id="quickHideVaultBtn"
@@ -890,12 +1012,15 @@
         </button>
       </div>
 
+      <!-- Emotional Slide Deck (3 Cards) -->
       <div class="bg-[#2B070D]/90 border-2 border-[#D4AF37]/60 rounded-2xl p-6 shadow-2xl space-y-4">
         <div class="flex items-center justify-between text-xs text-[#D4AF37]">
-          <span id="vaultSlideTag" class="font-bold uppercase tracking-widest"></span>
+          <span id="vaultSlideTag" class="font-bold uppercase tracking-widest">Memory Card 1 of 3 • St. John's Lab</span>
           <span class="font-mono">🔒 Zero-Trace Encrypted</span>
         </div>
-        <p id="vaultSlideText" class="serif-heading text-lg sm:text-xl leading-relaxed text-[#FAF6F0] italic"></p>
+        <p id="vaultSlideText" class="serif-heading text-lg sm:text-xl leading-relaxed text-[#FAF6F0] italic">
+          "St. John's ki lab mein shuru hui kahani ek choti si mushkil se khatam thodi hogi, Mistu... Main tab bhi tere saath khada tha, aaj bhi tere saamne khada hoon."
+        </p>
         <div class="flex items-center justify-between pt-2">
           <button id="prevVaultSlideBtn" type="button" class="text-xs bg-white/10 hover:bg-white/20 px-3.5 py-1.5 rounded-lg">← Previous</button>
           <div class="flex gap-1.5" id="vaultSlideDots">
@@ -907,34 +1032,27 @@
         </div>
       </div>
 
+      <!-- Safety Alert Reminder for WhatsApp Linked Devices -->
       <div class="bg-amber-500/15 border border-amber-300/40 rounded-xl p-3.5 text-xs text-amber-100 flex items-start gap-2.5">
         <span class="text-base">⚠️</span>
         <div>
-          <strong id="vaultSafetyTitle" class="text-amber-300 block"></strong>
-          <span id="vaultSafetyBody"></span>
+          <strong class="text-amber-300 block">Sabse Pehla Safety Step (WhatsApp Check):</strong>
+          Apne phone mein <code>WhatsApp ➔ Settings (⋮) ➔ Linked Devices</code> khol ke check karna—agar wahan koi Tablet/Chrome logged in dikhe toh use turant <strong>Log Out</strong> kar dena. Aur yahan niche wale box mein bina kisi darr ke likho, iski koi history phone mein nahi rehti!
         </div>
       </div>
 
+      <!-- Zero-Trace Two-Way Private Chat Box -->
       <div class="bg-black/40 border border-[#D4AF37]/40 rounded-2xl p-4 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span id="vaultChatHeaderLabel" class="font-bold text-[#D4AF37]"></span>
-          <div class="flex items-center gap-2">
-            <select id="vaultSenderSelect" aria-label="Sender" class="bg-white/10 border border-[#D4AF37]/40 rounded-lg px-2 py-0.5 text-[11px] text-[#F5E6C8] focus:outline-none">
-              <option value="M" class="text-black">Sender 1</option>
-              <option value="P" class="text-black">Sender 2</option>
-            </select>
-            <button id="syncVaultCloudBtn" type="button" class="text-[11px] bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-lg">
-              ● Live Sync ↻
-            </button>
-          </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-[#D4AF37]">💬 Zero-Trace Private DropBox (Direct to Pushpendra)</span>
+          <span class="text-[11px] text-emerald-300">● Live Sync Ready</span>
         </div>
         <div id="vaultChatMessages" class="space-y-2 max-h-40 overflow-y-auto text-xs pr-1"></div>
         <div class="flex gap-2">
           <input
             id="vaultMessageInput"
             type="text"
-            autocomplete="off"
-            placeholder="..."
+            placeholder="Yahan apna message likho Mistu... (leaves zero trace on phone)"
             class="flex-1 bg-white/10 text-white placeholder-white/50 text-xs rounded-xl px-3.5 py-2.5 border border-[#D4AF37]/40 focus:outline-none"
           />
           <button
@@ -1058,76 +1176,25 @@
 
     let activeFeedFilter = "ALL";
 
-    // Obfuscated Zero-Trace Archive Engine (FNV-1a Hash + XOR Cipher, Zero localStorage trace)
-    const _V_HASH = 0x9dcd25b7;
-    const _V_KEY = 73;
-    const _V_BUNDLE_B64 = "Mms9ID0lLGtzaWsbJjAoJWkEKDsmJidpGTsgPyg9LGkfKDwlPWtlaWs+KBY9ID0lLGtzaWsaKCs6LGkZLCElKGkaKC8sPTBpGj0sOWlhHiEoPToIOTlpCiEsKiJgc2tlaWs+KBYrJi0wa3Npawg5JyxpOSEmJyxpJCwgJ2l1KiYtLHceISg9Ogg5OWmr191pGiw9PSAnLjppYavC52Bpq9fdaQUgJyIsLWkNLD8gKiw6dWYqJi0sd2kiISYlaSIsaSohLCoiaSIoOycoq8ndKC4oO2k+KCEoJ2kiJiBpHSgrJSw9ZgohOyYkLGklJi4uLC1pICdpLSAiISxpPSYhaTw6LGk9PDsoJz1pdTo9OyYnLncFJi5pBjw9dWY6PTsmJy53aSIoO2ktLCcoZ2kIPDtpMCghKCdpJyAqISxpPiglLGkrJjFpJCwgJ2krICcoaSIgOiBpLSg7O2kiLGklICIhJmVpIDoiIGkiJiBpISA6PSY7MGk5ISYnLGkkLCAnaScoISBpOywhPSBoa2VpayohKD0WISwoLSw7a3Npa7nW2+VpEyw7JmQdOygqLGkZOyA/KD0saQ07JjkLJjFpYQ0gOywqPWkaMCcqYGtlaWs5JSgqLCEmJS0sO2tzaWsQKCEoJ2koOScoaSQsOjooLixpJSAiISZnZ2dpYSUsKD8sOmkzLDsmaT07KCosaSYnaTkhJicsYGtlaWs6JSAtLDprc2kSMms9KC5rc2lrBCwkJjswaQooOy1peGkmL2l6aavJ62kaPWdpAyYhJ246aQUoK2kILjsoa2Vpaz0sMT1rc2lrFWsaPWdpAyYhJ246aSIgaSUoK2kkLCAnaTohPDs8aSE8IGkiKCEoJyBpLCJpKiEmPSBpOiBpJDw6ISIgJWk6LGkiISg9KCRpPSEmLSBpISYuIGVpBCA6PTxnZ2dpBCggJ2k9KCtpKyEgaT0sOyxpOigoPSFpIiEoLShpPSEoZWkoKCNpKyEgaT0sOyxpOigoJCcsaSIhKC0oaSEmJidnFWtrNGVpMms9KC5rc2lrBCwkJjswaQooOy1pe2kmL2l6aavJ62l4aQQoISAnLGkCIGkCISgkJjohIGtlaWs9LDE9a3NpaxVrBDwjISxpOSg9KGkhKCBpPTxpLSg7IGkhPCBpISggZWkgOiUgMCxpOSYmOyxpeGkkKCEgJyxpIiEoJCY6IWk7KCEoaT0oKCIgaT08IyEsaS4hKDtpOSxpIiYgaSgoJyohaScoaSgoMCxnZ2dpGSg7aT08IyE6LGktJiY7aTssIScoaSQsOyxpKyg6aSQsICdpJyghIGk9IShlaSA6JSAwLGk5JiY7IGktPCcgMChpIixpOigoJCcsaTogOy9pPSw7LGklIDAsaTAsaTk7JiMsKj1pKygnKCIsaSUoMChpISYmJ2cVa2s0ZWkyaz0oLmtzaWsELCQmOzBpCig7LWl6aSYvaXppq8nraXp4aQYqPSYrLDtpb2kIJT4oMDprZWlrPSwxPWtzaWsVa3p4aQYqPSYrLDtpIiBpISg7aSwiaSsoKD1pJCw7LGktICVpJCwgJ2k6KC8saSEoIGVpBCA6PTxnaR08aSsgJSI8JWkkKD1pLSg7Jyiryd0oK2knKGkiJiBpHiEoPToIOTlpOSgtIWk5KDAsLihlaScoaSImIGkhPCQsICdpKCUoLmkiKDtpOSgwLC4oZ2kdLDsoaRk8OiE5LCctOyhpISgkLDohKGk9LDssaTooKD0haSEoIGcVa2s0FGVpazosJy0sOzprc2kSawQgOj08aavU7abxxmtlaWsZPDohOSwnLTsoaxRlaWs5ICcnLC1rc2kyazosJy0sO2tzaWsZPDohOSwnLTsoa2Vpaz0sMT1rc2lrAygraSshIGk9PGkwLGk/KDwlPWkiISYlLGVpKyg6aTAoISgnaSwiaSUgJyxpJSAiIWktLCcoaSIgaT08aT0hLCwiaSEoIGmr1O2m8cZrZWlrPSAkLGtzaWsZICcnLC1rNDQ=";
-    const LIVE_SITE_REDIRECT_URL = "https://tomarpushpendra31.github.io/mistique-ai-studio/";
-
-    function _fnv1aHash(str) {
-      let h = 0x811c9dc5;
-      const s = String(str || "").trim();
-      for (let i = 0; i < s.length; i++) {
-        h ^= s.charCodeAt(i);
-        h = Math.imul(h, 0x01000193) >>> 0;
+    // Stealth Vault Slides & Chat State
+    const VAULT_SLIDES = [
+      {
+        tag: "Memory Card 1 of 3 • St. John's Lab Agra",
+        text: "\"St. John's ki lab mein shuru hui kahani ek choti si mushkil se khatam thodi hogi, Mistu... Main tab bhi tere saath khada tha, aaj bhi tere saamne khada hoon.\""
+      },
+      {
+        tag: "Memory Card 2 of 3 • 1 Mahine Ki Khamoshi",
+        text: "\"Mujhe pata hai tu dari hui hai, isliye poore 1 mahine khamosh raha taaki tujhe ghar pe koi aanch na aaye... Par tujhse door rehna mere bas mein nahi tha, isliye poori duniya ke saamne sirf tere liye ye project banake laya hoon.\""
+      },
+      {
+        tag: "Memory Card 3 of 3 • 31 October & Always",
+        text: "\"31 October ki har ek baat mere dil mein safe hai, Mistu. Tu bilkul mat darna—ab na koi WhatsApp padh payega, na koi humein alag kar payega. Tera Pushpendra hamesha tere saath hai.\""
       }
-      return h >>> 0;
-    }
-
-    function _isStealthTrigger(str) {
-      return _fnv1aHash(str) === _V_HASH;
-    }
-
-    function _xorEncode(plainStr) {
-      try {
-        const utf8 = encodeURIComponent(plainStr).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode("0x" + p1));
-        let out = "";
-        for (let i = 0; i < utf8.length; i++) {
-          out += String.fromCharCode(utf8.charCodeAt(i) ^ _V_KEY);
-        }
-        return btoa(out);
-      } catch (e) {
-        return "";
-      }
-    }
-
-    function _xorDecode(b64Str) {
-      try {
-        const raw = atob(b64Str);
-        let hexEsc = "";
-        for (let i = 0; i < raw.length; i++) {
-          const b = raw.charCodeAt(i) ^ _V_KEY;
-          hexEsc += "%" + ("00" + b.toString(16)).slice(-2);
-        }
-        return decodeURIComponent(hexEsc);
-      } catch (e) {
-        return "";
-      }
-    }
-
-    function _purgeZeroTraceStorage() {
-      try {
-        localStorage.removeItem("mistique_vault_msgs_v2");
-        if (currentUser && _isStealthTrigger(currentUser.pin)) {
-          currentUser.pin = "";
-          safeSetStorage("mistique_user_v2", currentUser);
-        }
-        for (let i = localStorage.length - 1; i >= 0; i--) {
-          const k = localStorage.key(i);
-          if (!k) continue;
-          const v = localStorage.getItem(k) || "";
-          if (/vault/i.test(k) || _isStealthTrigger(k) || _isStealthTrigger(v)) {
-            localStorage.removeItem(k);
-          }
-        }
-      } catch (e) {}
-    }
-    _purgeZeroTraceStorage();
-
-    let VAULT_SLIDES = [];
+    ];
     let currentVaultSlide = 0;
-    let vaultMessages = [];
-    let vaultPollTimer = null;
+    let vaultMessages = safeGetStorage("mistique_vault_msgs_v2", [
+      { sender: "Pushpendra", text: "Mistu, jab bhi tu ye 0507 khole, bas yahan ek line likh dena ki tu theek hai ❤️", time: "Pinned" }
+    ]);
 
     // Toast Helper
     let toastTimer = null;
@@ -1142,17 +1209,288 @@
       }, 3200);
     }
 
+    // =========================================================================
+    // 1ST YEAR FOUNDATION STUDIO ENGINE (CROQUIS, COLOR HARMONY & SWATCH FILE)
+    // =========================================================================
+    const SWATCH_ENCYCLOPEDIA = {
+      georgette: {
+        name: "Pure Silk Georgette",
+        weave: "Plain Weave (High-Twist S & Z Crepe Yarn)",
+        gsm: "60 – 85 GSM (Lightweight Flowing)",
+        drape: "High Fluid Drape • Slight Crinkled Pebbled Texture",
+        needle: "Size 9/65 Ballpoint • 12–14 SPI",
+        garments: "Kalidar Anarkali, Layered Gowns, Dupattas, Sarees",
+        care: "Dry Clean Only • Low Steam Iron on Reverse"
+      },
+      organza: {
+        name: "Silk Organza (Crisp Sheer)",
+        weave: "Plain Open Weave (Combed Filament Silk)",
+        gsm: "35 – 55 GSM (Ultra-Light Stiff)",
+        drape: "Structured Architectural Volume • Crisp Hold",
+        needle: "Size 8/60 Fine Sharp • French Seams Recommended",
+        garments: "Ruffled Couture Gowns, Puff Sleeves, Veil Dupattas",
+        care: "Gentle Hand Wash Cold or Dry Clean • Use Pressing Cloth"
+      },
+      brocade: {
+        name: "Banarasi Zari Brocade",
+        weave: "Jacquard Loom Weave with Supplementary Zari Weft",
+        gsm: "180 – 260 GSM (Heavy Rich)",
+        drape: "Structured Royal Fall • High Dimensional Stability",
+        needle: "Size 14/90 Sharp • Requires Cotton Astar Lining",
+        garments: "16-Kali Bridal Lehengas, Sherwanis, Structured Corsets",
+        care: "Strictly Dry Clean • Wrap in Muslin Cloth"
+      },
+      chiffon: {
+        name: "Pure Crepe Chiffon",
+        weave: "Balanced Plain Mesh Weave (Alternate S & Z Twist)",
+        gsm: "30 – 50 GSM (Feather Sheer)",
+        drape: "Ultra-Soft Cascading Fall • Semi-Transparent",
+        needle: "Size 9/65 Microtex • Rolled Hem / Pico Edge",
+        garments: "Draped Sarees, Evening Caftans, Overlay Skirts",
+        care: "Dry Clean Only • Never Wring"
+      },
+      velvet: {
+        name: "Royal Micro Velvet (9000 Grade)",
+        weave: "Warp Pile Weave (Cut Pile Plush Surface)",
+        gsm: "240 – 320 GSM (Heavy Luxury)",
+        drape: "Rich Heavy Fall • Directional Nap Shading",
+        needle: "Size 11/75 Stretch/Universal • Stitch in Nap Direction",
+        garments: "Winter Bridal Lehengas, Zardozi Blouses, Royal Shawls",
+        care: "Dry Clean • Steam Only from Back (Never Press Pile)"
+      },
+      cotton_poplin: {
+        name: "Mercerized Cotton Poplin / Cambric",
+        weave: "Tightly Woven Plain Weave (Fine Warp, Coarser Weft)",
+        gsm: "110 – 145 GSM (Medium Crisp)",
+        drape: "Clean Tailored Structure • Breathable Matte Finish",
+        needle: "Size 11/75 Universal • 1st Year Bodice Block Standard",
+        garments: "1st Year Basic Bodice Blocks, Shirts, A-Line Dresses, Astar",
+        care: "Machine Wash Warm • High Steam Iron"
+      },
+      tussar: {
+        name: "Bhagalpuri Wild Tussar Silk",
+        weave: "Handloom Plain Weave (Natural Slub Filament)",
+        gsm: "95 – 130 GSM (Medium Textured)",
+        drape: "Semi-Crisp Organic Fall • Natural Gold Sheen",
+        needle: "Size 11/75 Universal • Overlock Raw Edges",
+        garments: "Indo-Western Jackets, Kurta Sets, Hand-Painted Sarees",
+        care: "Dry Clean or Mild Silk Shampoo Wash"
+      },
+      chanderi: {
+        name: "Handloom Chanderi Silk Tissue",
+        weave: "Plain Weave (Silk Warp + Fine Cotton/Zari Weft)",
+        gsm: "65 – 95 GSM (Light Luminous)",
+        drape: "Airy Semi-Sheer Grace • Metallic Lustre",
+        needle: "Size 9/65 Fine • Cotton Mull Lining Required",
+        garments: "Festive Kalidar Suits, Straight Kurtas, Lehenga Dupattas",
+        care: "Dry Clean Only • Store Away from Moisture"
+      }
+    };
+
+    function runCroquisCalculator() {
+      const totalHeight = parseFloat(document.getElementById("croquisSheetSelect").value) || 9.5;
+      const totalHeads = parseInt(document.getElementById("croquisScaleSelect").value, 10) || 9;
+      const headUnit = totalHeight / totalHeads;
+
+      document.getElementById("croquisHeadUnitBadge").textContent = `1 Head = ${headUnit.toFixed(2)}" (${(headUnit * 2.54).toFixed(1)} cm)`;
+
+      const landmarks = [
+        { label: "0. Crown (Top)", heads: 0 },
+        { label: "1. Chin Level", heads: 1.0 },
+        { label: "2. Shoulder Line", heads: 1.5 },
+        { label: "3. Bust / Chest", heads: 2.0 },
+        { label: "4. Waist +Elbows", heads: 3.0 },
+        { label: "5. High Hip / Pelvis", heads: 4.0 },
+        { label: "6. Wrist / Fingertip", heads: 4.75 },
+        { label: "7. Knee Joint", heads: totalHeads === 10 ? 6.5 : 6.0 },
+        { label: "8. Calf Muscle", heads: totalHeads === 10 ? 7.8 : 7.2 },
+        { label: `9. Ankle (${totalHeads}H Base)`, heads: totalHeads - 0.5 },
+        { label: `10. Toe Tip (${totalHeads}H)`, heads: totalHeads }
+      ];
+
+      const listEl = document.getElementById("croquisRulerList");
+      listEl.innerHTML = landmarks
+        .map((lm) => {
+          const inchPos = (lm.heads * headUnit).toFixed(2);
+          return `
+            <div class="flex items-center justify-between border-b border-white/10 pb-0.5">
+              <span class="text-[#F5E6C8]/90">${lm.label}</span>
+              <span class="text-[#D4AF37] font-bold">${inchPos}" <span class="text-[9px] text-white/50">(${lm.heads}H)</span></span>
+            </div>
+          `;
+        })
+        .join("");
+
+      // Render 9-Head Mannequin SVG with horizontal grid lines
+      const svg = document.getElementById("croquisSvgCanvas");
+      let gridLines = "";
+      for (let h = 0; h <= totalHeads; h++) {
+        const y = 12 + (h / totalHeads) * 236;
+        gridLines += `<line x1="8" y1="${y}" x2="132" y2="${y}" stroke="rgba(212,175,55,0.28)" stroke-width="0.8" stroke-dasharray="2 2" />`;
+        gridLines += `<text x="10" y="${y - 2}" fill="#D4AF37" font-size="7" font-family="monospace">${h}H</text>`;
+      }
+
+      svg.innerHTML = `
+        ${gridLines}
+        <!-- Fashion Croquis Stylized Mannequin Silhouette -->
+        <line x1="70" y1="12" x2="70" y2="248" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+        <!-- Head (0H - 1H) -->
+        <ellipse cx="70" cy="25" rx="9" ry="12" fill="rgba(212,175,55,0.25)" stroke="#D4AF37" stroke-width="1.5" />
+        <!-- Neck & Shoulders (1.5H) -->
+        <line x1="70" y1="37" x2="70" y2="48" stroke="#F5E6C8" stroke-width="2" />
+        <!-- Torso Upper (Shoulders 1.5H to Waist 3H) -->
+        <polygon points="46,48 94,48 80,88 60,88" fill="rgba(107,20,34,0.65)" stroke="#D4AF37" stroke-width="1.5" />
+        <!-- Pelvis / Hip Block (Waist 3H to Hip 4H) -->
+        <polygon points="60,88 80,88 92,116 48,116" fill="rgba(212,175,55,0.22)" stroke="#F5E6C8" stroke-width="1.5" />
+        <!-- Left & Right Legs (Hip 4H to Knee 6H to Ankle 8.5H) -->
+        <polyline points="56,116 60,172 63,234 59,247" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+        <polyline points="84,116 80,172 77,234 81,247" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+        <!-- Arms (Shoulder 1.5H to Elbow 3H to Wrist 4.75H) -->
+        <polyline points="46,48 39,88 43,130" fill="none" stroke="#F5E6C8" stroke-width="1.5" stroke-linecap="round" />
+        <polyline points="94,48 101,88 97,130" fill="none" stroke="#F5E6C8" stroke-width="1.5" stroke-linecap="round" />
+        <!-- Joint Nodes -->
+        <circle cx="60" cy="172" r="2.5" fill="#D4AF37" />
+        <circle cx="80" cy="172" r="2.5" fill="#D4AF37" />
+      `;
+    }
+
+    // HSL / Hex Color Harmony Math Engine
+    function hexToHsl(hex) {
+      let r = parseInt(hex.slice(1, 3), 16) / 255;
+      let g = parseInt(hex.slice(3, 5), 16) / 255;
+      let b = parseInt(hex.slice(5, 7), 16) / 255;
+      let max = Math.max(r, g, b), min = Math.min(r, g, b);
+      let h = 0, s = 0, l = (max + min) / 2;
+      if (max !== min) {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+    }
+
+    function hslToHex(h, s, l) {
+      h = ((h % 360) + 360) % 360;
+      s = Math.max(0, Math.min(100, s)) / 100;
+      l = Math.max(0, Math.min(100, l)) / 100;
+      let c = (1 - Math.abs(2 * l - 1)) * s;
+      let x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+      let m = l - c / 2;
+      let r = 0, g = 0, b = 0;
+      if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+      else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+      else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+      else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+      else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+      else { r = c; g = 0; b = x; }
+      const toHex = (n) => Math.round((n + m) * 255).toString(16).padStart(2, "0").toUpperCase();
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    function runColorHarmonyGenerator() {
+      const baseHex = (document.getElementById("harmonyBaseColorPicker").value || "#6B1422").toUpperCase();
+      const filterRule = document.getElementById("harmonyRuleSelect").value || "all";
+      document.getElementById("harmonyBaseHexLabel").textContent = baseHex;
+
+      const [h, s, l] = hexToHsl(baseHex);
+
+      const schemes = [
+        {
+          key: "complementary",
+          title: "1. Complementary (180° Contrast)",
+          desc: "Best for Bridal Lehenga & Dupatta Contrast",
+          colors: [baseHex, hslToHex(h + 180, s, Math.max(35, l)), hslToHex(h + 180, Math.max(40, s - 20), 75)]
+        },
+        {
+          key: "analogous",
+          title: "2. Analogous (±30° Adjacent Wheel)",
+          desc: "Best for Ombre & Gradient Couture",
+          colors: [hslToHex(h - 30, s, l), baseHex, hslToHex(h + 30, s, Math.min(75, l + 12))]
+        },
+        {
+          key: "triadic",
+          title: "3. Triadic (120° 3-Point Harmony)",
+          desc: "Vibrant Festive & Folk Embroidery Palette",
+          colors: [baseHex, hslToHex(h + 120, Math.max(45, s - 10), Math.max(40, l)), hslToHex(h + 240, Math.max(45, s - 10), Math.max(45, l))]
+        },
+        {
+          key: "monochromatic",
+          title: "4. Monochromatic (Tints, Tone & Shade)",
+          desc: "Minimalist Luxury & Tone-on-Tone Zardozi",
+          colors: [hslToHex(h, s, Math.max(18, l - 15)), baseHex, hslToHex(h, Math.max(30, s - 15), Math.min(88, l + 35))]
+        }
+      ];
+
+      const visibleSchemes = filterRule === "all" ? schemes : schemes.filter((sc) => sc.key === filterRule);
+      const container = document.getElementById("colorHarmonyOutputGrid");
+
+      container.innerHTML = visibleSchemes
+        .map(
+          (sc) => `
+          <div class="bg-[#FAF6F0] border border-gray-200 rounded-xl p-2.5">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-bold text-[#4A0E17]">${sc.title}</span>
+              <span class="text-[10px] text-gray-500">${sc.desc}</span>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+              ${sc.colors
+                .map(
+                  (c) => `
+                <button type="button" data-copy-hex="${c}" class="harmony-hex-btn group bg-white rounded-lg p-1.5 border border-gray-200 hover:border-[#4A0E17] flex items-center gap-1.5 transition">
+                  <span class="w-5 h-5 rounded border border-black/10 shrink-0" style="background:${c};"></span>
+                  <span class="font-mono text-[10px] font-bold text-gray-800 group-hover:text-[#6B1422]">${c}</span>
+                </button>
+              `
+                )
+                .join("")}
+            </div>
+          </div>
+        `
+        )
+        .join("");
+
+      container.querySelectorAll(".harmony-hex-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const hx = btn.getAttribute("data-copy-hex");
+          try { navigator.clipboard.writeText(hx); } catch (e) {}
+          showToast(`🎨 Copied Color Harmony Hex ${hx}!`);
+        });
+      });
+    }
+
+    function renderSwatchEncyclopediaCard() {
+      const key = document.getElementById("swatchFabricSelect").value || "georgette";
+      const info = SWATCH_ENCYCLOPEDIA[key] || SWATCH_ENCYCLOPEDIA.georgette;
+      const card = document.getElementById("swatchDetailCard");
+
+      card.innerHTML = `
+        <div class="font-bold text-[#4A0E17] text-sm border-b border-[#6B1422]/15 pb-1">${info.name}</div>
+        <div><strong class="text-gray-700">Weave Structure:</strong> <span class="text-gray-900">${info.weave}</span></div>
+        <div><strong class="text-gray-700">Weight (GSM):</strong> <span class="font-mono text-[#6B1422] font-bold">${info.gsm}</span></div>
+        <div><strong class="text-gray-700">Drape &amp; Fall:</strong> <span class="text-gray-900">${info.drape}</span></div>
+        <div><strong class="text-gray-700">Needle &amp; Stitch:</strong> <span class="text-gray-900">${info.needle}</span></div>
+        <div><strong class="text-gray-700">Best Silhouette:</strong> <span class="text-emerald-800 font-semibold">${info.garments}</span></div>
+        <div><strong class="text-gray-700">Wash &amp; Iron Care:</strong> <span class="text-gray-600">${info.care}</span></div>
+      `;
+    }
+
     // -------------------------------------------------------------------------
     // 1. KALI GEOMETRY & PANNA OPTIMIZER + SVG BLUEPRINT ENGINE
     // -------------------------------------------------------------------------
     function runKaliMathEngine() {
-      const W = Math.max(1, parseFloat(document.getElementById("inputWaist").value) || 30);
-      const L = Math.max(1, parseFloat(document.getElementById("inputLength").value) || 42);
-      const K = Math.max(1, parseInt(document.getElementById("inputKalis").value, 10) || 16);
-      const P = Math.max(1, parseFloat(document.getElementById("inputPanna").value) || 44);
-      const fabricRate = Math.max(0, parseFloat(document.getElementById("inputFabricRate").value) || 850);
-      const craftCost = Math.max(0, parseFloat(document.getElementById("inputCraftCost").value) || 3200);
-      const laborCost = Math.max(0, parseFloat(document.getElementById("inputLaborCost").value) || 1800);
+      const W = parseFloat(document.getElementById("inputWaist").value) || 30;
+      const L = parseFloat(document.getElementById("inputLength").value) || 42;
+      const K = parseInt(document.getElementById("inputKalis").value, 10) || 16;
+      const P = parseFloat(document.getElementById("inputPanna").value) || 44;
+
+      const fabricRate = parseFloat(document.getElementById("inputFabricRate").value) || 850;
+      const craftCost = parseFloat(document.getElementById("inputCraftCost").value) || 3200;
+      const laborCost = parseFloat(document.getElementById("inputLaborCost").value) || 1800;
 
       // Step 1: Top & Bottom width with 1.0 inch seam allowance
       const topWidth = (W / K) + 1.0;
@@ -1176,31 +1514,13 @@
       document.getElementById("outTotalMeters").textContent = totalMeters.toFixed(2) + " m";
       document.getElementById("outKalisPerRow").textContent = kalisPerRow + " kalis / " + P + '" row';
       document.getElementById("outTotalBomCost").textContent = "₹" + totalBom.toLocaleString("en-IN");
-      const savedPct = P >= 58 ? 38 : 32;
+
+      const savedPct = P === 58 ? 38 : 32;
       document.getElementById("outWastageSaved").textContent = savedPct + "% Fabric Saved (▲▼)";
 
       drawKaliBlueprintSvg(K, kalisPerRow, topWidth, bottomWidth, P, totalMeters);
 
-      return {
-        W,
-        L,
-        K,
-        P,
-        topWidth,
-        bottomWidth,
-        avgWidth,
-        kalisPerRow,
-        totalRows,
-        totalMeters,
-        totalBom,
-        fabricRate,
-        craftCost,
-        laborCost,
-        fabricCost,
-        zariCost: craftCost,
-        stitchCost: laborCost,
-        efficiency: savedPct
-      };
+      return { W, L, K, P, topWidth, bottomWidth, kalisPerRow, totalMeters, totalBom, fabricRate, craftCost, laborCost };
     }
 
     function drawKaliBlueprintSvg(K, kalisPerRow, topW, botW, P, totalMeters) {
@@ -1270,50 +1590,22 @@
       img.src = imgSrc;
     }
 
-    function calculateLuminance(r, g, b) {
-      const a = [r, g, b].map(v => {
-        v /= 255;
-        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-      });
-      return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
-    }
-
     function extractDominantColorsFromCanvas(ctx, width, height) {
-      try {
-        const samplePoints = [
-          [Math.floor(width * 0.25), Math.floor(height * 0.35)],
-          [Math.floor(width * 0.5), Math.floor(height * 0.5)],
-          [Math.floor(width * 0.72), Math.floor(height * 0.4)],
-          [Math.floor(width * 0.38), Math.floor(height * 0.7)],
-          [Math.floor(width * 0.62), Math.floor(height * 0.25)]
-        ];
-        const hexColors = samplePoints.map(([x, y]) => {
-          const data = ctx.getImageData(x, y, 1, 1).data;
-          const toHex = (n) => n.toString(16).padStart(2, "0").toUpperCase();
-          return `#${toHex(data[0])}${toHex(data[1])}${toHex(data[2])}`;
-        });
+      const samplePoints = [
+        [Math.floor(width * 0.25), Math.floor(height * 0.35)],
+        [Math.floor(width * 0.5), Math.floor(height * 0.5)],
+        [Math.floor(width * 0.72), Math.floor(height * 0.4)],
+        [Math.floor(width * 0.38), Math.floor(height * 0.7)],
+        [Math.floor(width * 0.62), Math.floor(height * 0.25)]
+      ];
 
-        // Compute dynamic contrast ratio between darkest and lightest sampled colors
-        const rgbValues = samplePoints.map(([x, y]) => {
-          const data = ctx.getImageData(x, y, 1, 1).data;
-          return [data[0], data[1], data[2]];
-        });
-        const luminances = rgbValues.map(rgb => calculateLuminance(rgb[0], rgb[1], rgb[2]));
-        const l1 = Math.max(...luminances);
-        const l2 = Math.min(...luminances);
-        const ratio = ((l1 + 0.05) / (l2 + 0.05)).toFixed(1);
-        const ratioBadge = document.getElementById("contrastRatioBadge");
-        if (ratioBadge) {
-          const grade = ratio >= 7 ? "(AAA Couture)" : ratio >= 4.5 ? "(AA Editorial)" : "(Passable)";
-          ratioBadge.textContent = `Contrast Ratio: ${ratio}:1 ${grade}`;
-        }
+      const hexColors = samplePoints.map(([x, y]) => {
+        const data = ctx.getImageData(x, y, 1, 1).data;
+        const toHex = (n) => n.toString(16).padStart(2, "0").toUpperCase();
+        return `#${toHex(data[0])}${toHex(data[1])}${toHex(data[2])}`;
+      });
 
-        renderPaletteSwatches(hexColors);
-      } catch (err) {
-        console.warn("Canvas image data extraction note:", err);
-        const fallback = ["#4A0E17", "#D4AF37", "#6B1422", "#FAF6F0", "#30070D"];
-        renderPaletteSwatches(fallback);
-      }
+      renderPaletteSwatches(hexColors);
     }
 
     function renderPaletteSwatches(hexList) {
@@ -1421,7 +1713,7 @@
       });
 
       document.getElementById("feedCountLabel").textContent =
-        `Showing ${filtered.length} live designs`;
+        `Showing ${filtered.length} live cached items (IndexedDB + Lazy-Loaded)`;
 
       grid.innerHTML = filtered
         .map(
@@ -1485,12 +1777,9 @@
     // -------------------------------------------------------------------------
     
     // =========================================================================
-    // 6. MASTER FOUNDER TERMINAL CONTROLLER (Obfuscated FNV-1a Hash)
+    // 6. MASTER KEY & ROOT ADMIN CONSOLE ('ROOT99' / 'MASTERKEY')
     // =========================================================================
-    const _M_HASHES = [0x82f6b5b7, 0x97edca45];
-    function _isMasterTrigger(str) {
-      return _M_HASHES.includes(_fnv1aHash(String(str || "").toUpperCase()));
-    }
+    const MASTER_KEYS = ["ROOT99", "MASTER99", "ADMIN0507", "ROOT0507"];
     let cloudStorageUsedMb = 127; // simulated starting usage out of 1024 MB
     const CLOUD_STORAGE_MAX_MB = 1024;
 
@@ -1530,174 +1819,21 @@
       document.getElementById("masterAdminModal").classList.add("hidden");
     }
 
-// 5. STEALTH VAULT CONTROLLER + REALTIME CROSS-PHONE SUPABASE SYNC
+// 5. STEALTH VAULT ('0507') CONTROLLER
     // -------------------------------------------------------------------------
-    const VAULT_SYNC_ROW_ID = "00000000-0000-4000-8000-000000000705";
-    const FEED_SYNC_ROW_ID  = "00000000-0000-4000-8000-000000000303";
-
-    async function syncVaultMessagesFromCloud() {
-      if (!supabaseClient) return;
-      let syncedList = null;
-
-      // Method A: Read encrypted vault chat state from Supabase 'designs' bucket JSON manifest
-      try {
-        const { data: pubData } = supabaseClient.storage.from("designs").getPublicUrl("sync_vnode_7f3a.json");
-        if (pubData && pubData.publicUrl) {
-          const res = await fetch(pubData.publicUrl + "?t=" + Date.now(), { cache: "no-store" });
-          if (res.ok) {
-            const payload = await res.json();
-            if (payload && Array.isArray(payload.c)) {
-              const decoded = payload.c
-                .map((item) => {
-                  try { return JSON.parse(_xorDecode(item)); } catch (e) { return null; }
-                })
-                .filter(Boolean);
-              if (decoded.length > 0) syncedList = decoded;
-            }
-          }
-        }
-      } catch (e) {}
-
-      // Method B: Also check public.vault_messages table if created
-      if (!syncedList) {
-        try {
-          const { data, error } = await supabaseClient
-            .from("vault_messages")
-            .select("*")
-            .order("created_at", { ascending: true })
-            .limit(40);
-          if (!error && Array.isArray(data) && data.length > 0) {
-            const decoded = data
-              .map((r) => {
-                try {
-                  return r.cipher_text ? JSON.parse(_xorDecode(r.cipher_text)) : { sender: r.sender, text: r.message, time: r.time_label || "" };
-                } catch (e) { return null; }
-              })
-              .filter(Boolean);
-            if (decoded.length > 0) syncedList = decoded;
-          }
-        } catch (e) {}
-      }
-
-      if (syncedList && syncedList.length > 0) {
-        vaultMessages = syncedList;
-        if (!document.getElementById("stealthVaultOverlay").classList.contains("hidden")) {
-          renderVaultMessages();
-        }
-      }
-    }
-
-    async function pushVaultMessagesToCloud(latestMsgObj) {
-      if (!supabaseClient) return;
-      // 1. Upload encrypted array to 'designs' bucket (sync_vnode_7f3a.json)
-      try {
-        const cipherArray = vaultMessages.slice(-30).map((m) => _xorEncode(JSON.stringify(m)));
-        const blob = new Blob([JSON.stringify({ c: cipherArray, u: Date.now() })], { type: "application/json" });
-        await supabaseClient.storage.from("designs").upload("sync_vnode_7f3a.json", blob, {
-          contentType: "application/json",
-          upsert: true
-        });
-      } catch (e) {}
-
-      // 2. Also insert into public.vault_messages if table exists
-      if (latestMsgObj) {
-        try {
-          await supabaseClient.from("vault_messages").insert({
-            sender: latestMsgObj.sender,
-            cipher_text: _xorEncode(JSON.stringify(latestMsgObj)),
-            time_label: latestMsgObj.time
-          });
-        } catch (e) {}
-      }
-    }
-
-    async function syncPortfolioFeedFromCloud() {
-      if (!supabaseClient) return;
-      try {
-        const { data: pubData } = supabaseClient.storage.from("designs").getPublicUrl("sync_feed_v3.json");
-        if (pubData && pubData.publicUrl) {
-          const res = await fetch(pubData.publicUrl + "?t=" + Date.now(), { cache: "no-store" });
-          if (res.ok) {
-            const remotePosts = await res.json();
-            if (Array.isArray(remotePosts) && remotePosts.length > 0) {
-              // Merge remote posts with local posts by id
-              const seenIds = new Set();
-              const merged = [];
-              [...remotePosts, ...portfolioFeed].forEach((p) => {
-                if (p && p.id && !seenIds.has(p.id)) {
-                  seenIds.add(p.id);
-                  merged.push(p);
-                }
-              });
-              portfolioFeed = merged.slice(0, 25);
-              safeSetStorage("mistique_feed_v2", portfolioFeed);
-              renderPortfolioFeed();
-            }
-          }
-        }
-      } catch (e) {}
-    }
-
-    async function pushPortfolioFeedToCloud() {
-      if (!supabaseClient) return;
-      try {
-        // Keep lightweight metadata & Supabase public URLs (strip huge base64 sample strings if any)
-        const compactFeed = portfolioFeed.slice(0, 18);
-        const blob = new Blob([JSON.stringify(compactFeed)], { type: "application/json" });
-        await supabaseClient.storage.from("designs").upload("sync_feed_v3.json", blob, {
-          contentType: "application/json",
-          upsert: true
-        });
-      } catch (e) {}
-    }
-
     function openStealthVault() {
-      _purgeZeroTraceStorage();
-      try {
-        const bundle = JSON.parse(_xorDecode(_V_BUNDLE_B64));
-        VAULT_SLIDES = bundle.slides || [];
-        document.getElementById("vaultTitleBanner").textContent = bundle.title || "Private Archive";
-        document.getElementById("vaultSafetyTitle").textContent = bundle.wa_title || "";
-        document.getElementById("vaultSafetyBody").innerHTML = bundle.wa_body || "";
-        document.getElementById("vaultChatHeaderLabel").textContent = bundle.chat_header || "";
-        document.getElementById("vaultMessageInput").placeholder = bundle.placeholder || "";
-        const sel = document.getElementById("vaultSenderSelect");
-        if (sel && Array.isArray(bundle.senders)) {
-          sel.innerHTML = bundle.senders.map(name => `<option value="${name}" class="text-black">${name}</option>`).join("");
-        }
-        if (vaultMessages.length === 0 && bundle.pinned) {
-          vaultMessages = [bundle.pinned];
-        }
-      } catch (e) {}
-
       document.getElementById("stealthVaultOverlay").classList.remove("hidden");
       renderVaultSlide();
       renderVaultMessages();
-      syncVaultMessagesFromCloud();
-
-      if (vaultPollTimer) clearInterval(vaultPollTimer);
-      vaultPollTimer = setInterval(syncVaultMessagesFromCloud, 4000);
     }
 
     function closeStealthVault() {
       document.getElementById("stealthVaultOverlay").classList.add("hidden");
       document.getElementById("aiPromptInput").value = "";
-      if (vaultPollTimer) {
-        clearInterval(vaultPollTimer);
-        vaultPollTimer = null;
-      }
-      // Wipe sensitive text from DOM when hidden
-      document.getElementById("vaultSlideTag").textContent = "";
-      document.getElementById("vaultSlideText").textContent = "";
-      document.getElementById("vaultSafetyTitle").textContent = "";
-      document.getElementById("vaultSafetyBody").innerHTML = "";
-      document.getElementById("vaultChatMessages").innerHTML = "";
-      _purgeZeroTraceStorage();
     }
 
     function renderVaultSlide() {
-      if (!VAULT_SLIDES.length) return;
-      const slide = VAULT_SLIDES[currentVaultSlide % VAULT_SLIDES.length];
+      const slide = VAULT_SLIDES[currentVaultSlide];
       document.getElementById("vaultSlideTag").textContent = slide.tag;
       document.getElementById("vaultSlideText").textContent = slide.text;
       const dots = document.getElementById("vaultSlideDots").children;
@@ -1733,9 +1869,28 @@
     window.addEventListener("DOMContentLoaded", () => {
       // Initial renders
       updateProfileAndPlanUI();
+      runCroquisCalculator();
+      runColorHarmonyGenerator();
+      renderSwatchEncyclopediaCard();
       loadVisionSampleImage(SAMPLE_IMAGES[0], "2.84 MB");
       renderPortfolioFeed();
-      syncPortfolioFeedFromCloud();
+
+      // 1st Year Foundation Listeners
+      ["croquisSheetSelect", "croquisScaleSelect"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", runCroquisCalculator);
+      });
+      ["harmonyBaseColorPicker", "harmonyRuleSelect"].forEach((id) => {
+        document.getElementById(id).addEventListener("input", runColorHarmonyGenerator);
+        document.getElementById(id).addEventListener("change", runColorHarmonyGenerator);
+      });
+      document.getElementById("swatchFabricSelect").addEventListener("change", renderSwatchEncyclopediaCard);
+      document.getElementById("copySwatchNotesBtn").addEventListener("click", () => {
+        const key = document.getElementById("swatchFabricSelect").value || "georgette";
+        const info = SWATCH_ENCYCLOPEDIA[key] || SWATCH_ENCYCLOPEDIA.georgette;
+        const textToCopy = `${info.name} | Weave: ${info.weave} | Weight: ${info.gsm} | Drape: ${info.drape} | Needle: ${info.needle} | Ideal Use: ${info.garments} | Care: ${info.care}`;
+        try { navigator.clipboard.writeText(textToCopy); } catch (e) {}
+        showToast(`📋 Copied ${info.name} practical notes for Swatch File!`);
+      });
 
       // Kali CAD inputs live recalculation
       ["inputWaist", "inputLength", "inputKalis", "inputPanna", "inputFabricRate", "inputCraftCost", "inputLaborCost"].forEach((id) => {
@@ -1743,7 +1898,7 @@
         document.getElementById(id).addEventListener("change", runKaliMathEngine);
       });
 
-      // Module Tab Switching
+      // Module Tab Switching (Clean full-width expansion when a single module is selected)
       document.querySelectorAll(".module-tab-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           const tab = btn.getAttribute("data-tab");
@@ -1752,308 +1907,261 @@
           });
           btn.className = "module-tab-btn bg-[#D4AF37] text-[#2B070D] font-bold text-xs px-3 py-1.5 rounded-lg transition whitespace-nowrap";
 
-          const topGrid = document.getElementById("topEngineeringGrid");
+          const foundSec = document.getElementById("sectionFoundationModule");
           const cadSec = document.getElementById("sectionCadModule");
           const visSec = document.getElementById("sectionVisionModule");
           const feedSec = document.getElementById("sectionFeedModule");
 
-          topGrid.classList.remove("hidden");
-          cadSec.classList.remove("hidden", "lg:col-span-12", "lg:col-span-7");
-          visSec.classList.remove("hidden", "lg:col-span-12", "lg:col-span-5");
+          foundSec.classList.remove("hidden");
+          cadSec.classList.remove("hidden", "lg:col-span-12");
+          visSec.classList.remove("hidden", "lg:col-span-12");
+          cadSec.classList.add("lg:col-span-7");
+          visSec.classList.add("lg:col-span-5");
           feedSec.classList.remove("hidden");
 
-          if (tab === "all") {
-            cadSec.classList.add("lg:col-span-7");
-            visSec.classList.add("lg:col-span-5");
-          } else if (tab === "cad") {
-            cadSec.classList.add("lg:col-span-12");
+          if (tab === "foundation") {
+            cadSec.classList.add("hidden");
             visSec.classList.add("hidden");
             feedSec.classList.add("hidden");
+          } else if (tab === "cad") {
+            foundSec.classList.add("hidden");
+            visSec.classList.add("hidden");
+            feedSec.classList.add("hidden");
+            cadSec.classList.remove("lg:col-span-7");
+            cadSec.classList.add("lg:col-span-12");
           } else if (tab === "vision") {
-            visSec.classList.add("lg:col-span-12");
+            foundSec.classList.add("hidden");
             cadSec.classList.add("hidden");
             feedSec.classList.add("hidden");
+            visSec.classList.remove("lg:col-span-5");
+            visSec.classList.add("lg:col-span-12");
           } else if (tab === "feed") {
-            topGrid.classList.add("hidden");
+            foundSec.classList.add("hidden");
             cadSec.classList.add("hidden");
             visSec.classList.add("hidden");
           }
         });
       });
 
-      // Comprehensive Fashion Design & Textile Knowledge Base for AIFT Students
-      // Comprehensive Fashion Design & Textile Knowledge Base for AIFT Students & Boutiques
-      const FASHION_KNOWLEDGE_BASE = [
-        {
-                "keywords": [
-                        "types of lehenga",
-                        "how many types of lehengas",
-                        "lehenga types",
-                        "lehenga varieties",
-                        "lehenga styles"
-                ],
-                "title": "\ud83d\udc57 Complete Guide: Types of Lehengas in Indian Couture",
-                "answer": "There are 8 primary types of lehengas recognized in fashion design and bridal wear:\n1. Kali / Paneled Lehenga: Constructed using 8 to 32 geometric trapezoid panels (kalis) stitched together to create dramatic flare (ghera) with a fitted waist.\n2. Circular / Flared (Umbrella) Lehenga: Cut as a continuous full circle (360\u00b0) or double circle, giving maximum fluid drape without vertical panel seams.\n3. A-Line Lehenga: Resembles the letter 'A'\u2014fitted at the waist and gently widening toward the hem; ideal for minimalist and contemporary silhouettes.\n4. Mermaid / Fishtail Lehenga: Form-fitting from waist down to the knees, dramatically flaring out toward the hemline; highlights curves.\n5. Sharara / Panelled Skirt Lehenga: Wide-legged divided or pleated silhouette resembling palace royal court wear of Lucknow and Awadh.\n6. Ruffled / Tiered Lehenga: Multi-layered ruffled tiers, popular in modern organza, tulle, and cocktail pre-wedding wear.\n7. Jacket / Koti Style Lehenga: Paired with a long floor-length open jacket or structured sherwani coat over a minimalist lehenga skirt.\n8. Asymmetric / Trail Lehenga: Features a high-low hemline or a flowing royal back train (court train) for red-carpet bridal couture."
-        },
-        {
-                "keywords": [
-                        "fabric",
-                        "fabrics",
-                        "silk vs",
-                        "best fabric",
-                        "cloth type",
-                        "which fabric"
-                ],
-                "title": "\ud83e\uddf5 Fabric Selection Matrix for Couture Design",
-                "answer": "\u2022 Heavy Bridal & Zari Work: Raw Silk (100\u2013120 GSM), Mulberry Silk, Banarasi Brocade, or Velvet (350+ GSM).\n\u2022 Fluidity & Soft Drapes: Pure Georgette (60\u201380g), Chiffon, Chinon, or Tissue Silk.\n\u2022 Modern Structured Volume: Organza (40\u201360 GSM), French Net, Mikado, or Silk Dupion.\n\u2022 Lining Selection: Santoon or Butter Crepe for body contact; Canvas & Nylon Net (Can-Can) for structure."
-        },
-        {
-                "keywords": [
-                        "kali",
-                        "yardage",
-                        "meterage",
-                        "cloth",
-                        "fabric requirement",
-                        "lehenga kitna kapda",
-                        "kapda kitna"
-                ],
-                "title": "\ud83d\udcd0 Kali & Yardage Math Guide (AIFT Standard)",
-                "answer": "\u2022 16-Kali Bridal Lehenga: Requires 3.3m \u2013 3.8m on 44\" Panna, or 2.8m on 58\" Panna.\n\u2022 24-Kali Maharani Ghera: Requires 4.5m \u2013 5.2m fabric (allows generous 120\"\u2013140\" ghera flare).\n\u2022 Trapezoid Nesting Trick: By cutting alternating upright (\u25b2) and inverted (\u25bc) panels, fabric wastage reduces by ~35%.\n\u2022 Top Width = (Waist / K) + 1.0\" (with seam margin), Bottom Width = ((Waist \u00d7 3.2) / K) + 1.0\".\n\u2022 Exact formula: Total meters = (Rows \u00d7 (Length + 2.0\")) / 39.37."
-        },
-        {
-                "keywords": [
-                        "panna",
-                        "width",
-                        "44",
-                        "58",
-                        "roll width",
-                        "fabric width",
-                        "araz"
-                ],
-                "title": "\ud83d\udccf Fabric Panna (Roll Width) Guide",
-                "answer": "\u2022 44\" Panna: Standard width for Indian silks (Raw silk, Banarasi, Chanderi, Tussar, Brocade). Accommodates 5 to 7 kalis per row depending on flare.\n\u2022 58\" Panna: Extra-wide width for Organza, Net, Georgette, and imported Satin. Fits 8 to 10 kalis per row, saving ~25% total fabric meterage.\n\u2022 Selvedge allowance: Always reserve 0.5\" on both sides of the panna as selvedge/usable width."
-        },
-        {
-                "keywords": [
-                        "zari",
-                        "zardozi",
-                        "embroidery",
-                        "care",
-                        "dry clean",
-                        "tarnish",
-                        "cleaning"
-                ],
-                "title": "\u2728 Zari, Zardozi & Hand Embroidery Care Guide",
-                "answer": "\u2022 Preservation: Wrap heavy zardozi garments in pure unbleached muslin/cotton (malmal) cloth\u2014never in plastic, which traps moisture and tarnishes metallic wires.\n\u2022 Ironing: Always iron on the reverse (wrong side) over a padded towel with a press cloth. Never apply direct steam or hot plate on metallic zari.\n\u2022 Dry Cleaning: Strictly hydrocarbon or delicate dry cleaning. Chemical perchlorethylene can melt delicate micro-sequins (sitara) and dull antique bullion wires."
-        },
-        {
-                "keywords": [
-                        "color",
-                        "palette",
-                        "trend",
-                        "trending",
-                        "2026",
-                        "rang",
-                        "swatch"
-                ],
-                "title": "\ud83c\udfa8 Couture Color & Palette Forecast",
-                "answer": "\u2022 Royal Heritage: Deep Royal Maroon (#4A0E17), Antique Gold (#D4AF37), Ivory Beige (#F5E6CC), and Oxblood (#2B070D).\n\u2022 Peacock & Jewel Tones: Deep Emerald Teal (#0F4C5C), Rust Ochre (#E36414), and Persian Ruby (#9A031E).\n\u2022 Contemporary Pastel Drape: Dusty Rose (#C89D7C), Champagne Gold (#F9E29C), and Sage Green (#84A98C).\n\u2022 Tip: Use Module 02 (Vision Scanner) to extract 5 harmonious clustered swatches from any sketch."
-        },
-        {
-                "keywords": [
-                        "seam",
-                        "allowance",
-                        "silai",
-                        "margin",
-                        "hem",
-                        "nefa",
-                        "waistband"
-                ],
-                "title": "\u2702\ufe0f Tailoring Allowances & Seam Margins",
-                "answer": "\u2022 Side Seams on Kalis: 0.5\" on each side (total 1.0\" per panel width).\n\u2022 Hemline (Ghera): 1.5\" to 2.0\" for can-can attachment, canvas buckram, and embroidered border facing.\n\u2022 Waistband (Nefa): Cut 4.0\" wide strip (folds to 1.5\" finished waistband + 1.0\" seam allowance for drawstring/dori)."
-        },
-        {
-                "keywords": [
-                        "bom",
-                        "cost",
-                        "costing",
-                        "budget",
-                        "pricing",
-                        "kharcha",
-                        "rate"
-                ],
-                "title": "\ud83d\udcb0 Garment BOM (Bill of Materials) & Costing Formula",
-                "answer": "\u2022 Total BOM = (Fabric Meters \u00d7 Fabric Rate) + Adda/Zardozi Work + Tailoring/Masterji Stitching + Lining/Can-Can + Hardware (zipper/latkan).\n\u2022 Industry Markup: Boutiques typically apply a 2.5\u00d7 to 3.5\u00d7 multiplier on total BOM for retail designer pricing.\n\u2022 Example: \u20b94,400 BOM garment retails at \u20b911,000 \u2013 \u20b915,000 in fashion boutiques."
-        },
-        {
-                "keywords": [
-                        "can-can",
-                        "cancan",
-                        "flare",
-                        "volume",
-                        "stiffener",
-                        "buckram"
-                ],
-                "title": "\ud83d\udc57 Ghera Volume & Can-Can Layering Guide",
-                "answer": "\u2022 Stiff Double Can-Can: 8 to 12 meters of nylon crinoline/net pleated on an underskirt tier (starting 12\" below hip line).\n\u2022 Horsehair Braid (Crinoline tape): 2\" to 4\" inserted at hemline gives an undulating structured bounce without heavy weight.\n\u2022 Micro-lining: Always place a soft satin or butter-crepe layer between can-can and skin to prevent abrasion."
-        },
-        {
-                "keywords": [
-                        "dupatta",
-                        "drape",
-                        "pallu",
-                        "veil"
-                ],
-                "title": "\ud83e\udde3 Dupatta Proportion & Drape Guide",
-                "answer": "\u2022 Standard Bridal Dupatta: 2.5 meters length \u00d7 1.0 meter width on 44\" fabric.\n\u2022 Double Dupatta Styling: One heavy velvet/brocade shoulder drape + one ultra-lightweight organza/net head veil (sheesh patti drape).\n\u2022 Border facing: 2.5\" to 3.5\" embroidered border with micro-piping gives crisp stability."
-        }
-];
-
-      function answerFashionQuestion(query) {
+      // =========================================================================
+      // INTELLIGENT AI FASHION MENTOR, SYLLABUS Q&A & AUTO-CAD PARAMETER ENGINE
+      // =========================================================================
+      function buildLocalExpertFashionAnswer(query) {
         const q = query.toLowerCase();
-        
-        // Check for specific match in knowledge base
-        for (const entry of FASHION_KNOWLEDGE_BASE) {
-          if (entry.keywords.some(kw => q.includes(kw))) {
-            return { title: entry.title, answer: entry.answer };
-          }
+        let autoActions = [];
+
+        // 1. Parse any garment numbers (kalis, waist, length, panna) & auto-update CAD calculator!
+        const kaliMatch = q.match(/(\b8|\b12|\b16|\b20|\b24)\s*-?\s*kali/);
+        if (kaliMatch) {
+          document.getElementById("inputKalis").value = kaliMatch[1];
+          autoActions.push(`Updated Kali count to <strong>${kaliMatch[1]} Kalis</strong>`);
+        }
+        const waistMatch = q.match(/waist\s*(\d{2})/);
+        if (waistMatch) {
+          document.getElementById("inputWaist").value = waistMatch[1];
+          autoActions.push(`Set Waist to <strong>${waistMatch[1]}"</strong>`);
+        }
+        const lenMatch = q.match(/(?:length|len)\s*(\d{2})/);
+        if (lenMatch) {
+          document.getElementById("inputLength").value = lenMatch[1];
+          autoActions.push(`Set Length to <strong>${lenMatch[1]}"</strong>`);
         }
 
-        // Contextual AI calculation response based on current studio CAD engine
-        const calc = runKaliMathEngine();
-        return {
-          title: `💡 Studio AI Couture Recommendation: "${query}"`,
-          answer: `• Pattern Geometry: Recommended ${calc.K}-Kali silhouette with ${calc.topWidth.toFixed(2)}" top width and ${calc.bottomWidth.toFixed(2)}" bottom flare.\n• Metric Fabric Estimation: ${calc.totalMeters.toFixed(2)} meters on ${calc.P}" roll width (${calc.totalRows} nested rows with ~${calc.efficiency}% pattern yield).\n• Color Harmony: Royal Maroon (#4A0E17) base paired with Antique Zari (#D4AF37) and warm accents.\n• Estimated Production BOM: ₹${calc.totalBom.toLocaleString("en-IN")} (Fabric: ₹${Math.round(calc.fabricCost).toLocaleString("en-IN")} + Handwork: ₹${calc.zariCost.toLocaleString("en-IN")} + Stitching: ₹${calc.stitchCost.toLocaleString("en-IN")}).`
+        // 2. Parse any color mentioned & auto-update 1st Year Color Harmony Wheel!
+        const colorMap = {
+          "royal blue": "#1E3A8A", "blue": "#2563EB", "navy": "#172554",
+          "emerald": "#047857", "green": "#15803D", "mint": "#6EE7B7",
+          "pastel pink": "#F472B6", "pink": "#EC4899", "rose": "#E11D48", "magenta": "#BE185D",
+          "maroon": "#6B1422", "red": "#DC2626", "crimson": "#991B1B",
+          "gold": "#D4AF37", "yellow": "#EAB308", "mustard": "#CA8A04",
+          "purple": "#7E22CE", "lavender": "#A855F7", "violet": "#6D28D9",
+          "ivory": "#FDFBF7", "black": "#18181B", "orange": "#EA580C", "peach": "#FB923C"
         };
-      }
-
-            // Google Gemini AI Live Connector (Connected via User Key)
-      const _G_KEY_BYTES = [120, 104, 23, 120, 91, 1, 107, 119, 15, 115, 115, 85, 111, 83, 0, 90, 127, 14, 122, 78, 85, 81, 85, 124, 123, 93, 113, 112, 72, 78, 90, 1, 123, 9, 99, 13, 109, 82, 107, 108, 125, 85, 112, 85, 13, 122, 126, 96, 88, 77, 119, 85, 120];
-      function _getGeminiKey() {
-        return _G_KEY_BYTES.map(b => String.fromCharCode(b ^ 57)).join("");
-      }
-
-      async function queryGeminiFashionAI(userQuery) {
-        const apiKey = _getGeminiKey();
-        const systemPrompt = "You are the MIST-ique AI Advisor. Answer any question the student asks—whether about fashion design, lehengas, textiles, pattern making, or general science, engineering (such as thermodynamics, physics, programming), or academics—in a clear, structured, concise bulleted format.";
-
-        // Check curated instant knowledge base first for 0ms exact AIFT curriculum answers
-        const qLower = userQuery.toLowerCase();
-        for (const entry of FASHION_KNOWLEDGE_BASE) {
-          if (entry.keywords.some(kw => qLower.includes(kw))) {
-            return `**${entry.title}**\n${entry.answer}`;
-          }
-        }
-
-        // 1. Try Google Gemini REST API (supports gemini-2.0-flash and gemini-1.5-flash)
-        const models = ["gemini-2.0-flash", "gemini-1.5-flash"];
-        for (const modelName of models) {
-          try {
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
-            const response = await fetch(endpoint, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{ role: "user", parts: [{ text: `${systemPrompt}\n\nQuestion: "${userQuery}"` }] }],
-                generationConfig: { temperature: 0.7, maxOutputTokens: 600 }
-              })
-            });
-            if (response.ok) {
-              const data = await response.json();
-              const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-              if (text) return text;
+        for (const [cName, cHex] of Object.entries(colorMap)) {
+          if (q.includes(cName)) {
+            const picker = document.getElementById("harmonyBaseColorPicker");
+            if (picker) {
+              picker.value = cHex;
+              runColorHarmonyGenerator();
+              autoActions.push(`Synced 1st-Year Color Wheel to <strong>${cName.toUpperCase()} (${cHex})</strong>`);
             }
-          } catch (netErr) {
-            // Network fetch failed
-            if (!navigator.onLine) throw new Error("LOW_CONNECTIVITY");
+            break;
           }
         }
 
-        // 2. Live AI Cloud Relay Fallback (handles general queries like 'what is thermodynamics' even if API key format is OAuth/Vertex)
-        const relayUrl = `https://text.pollinations.ai/${encodeURIComponent(systemPrompt + "\n\nQuestion: " + userQuery)}?model=openai`;
-        const relayRes = await fetch(relayUrl, { method: "GET" });
-        if (!relayRes.ok) {
-          throw new Error("LOW_CONNECTIVITY");
+        // 3. Parse any fabric mentioned & auto-update Swatch File Encyclopedia + Fabric Rate!
+        const fabricRates = {
+          velvet: { key: "velvet", rate: 1250 },
+          organza: { key: "organza", rate: 650 },
+          brocade: { key: "brocade", rate: 1400 },
+          banarasi: { key: "brocade", rate: 1450 },
+          georgette: { key: "georgette", rate: 750 },
+          chiffon: { key: "chiffon", rate: 550 },
+          cotton: { key: "cotton_poplin", rate: 320 },
+          poplin: { key: "cotton_poplin", rate: 320 },
+          tussar: { key: "tussar", rate: 950 },
+          chanderi: { key: "chanderi", rate: 880 }
+        };
+        for (const [fWord, fData] of Object.entries(fabricRates)) {
+          if (q.includes(fWord)) {
+            document.getElementById("swatchFabricSelect").value = fData.key;
+            renderSwatchEncyclopediaCard();
+            document.getElementById("inputFabricRate").value = fData.rate;
+            autoActions.push(`Loaded <strong>${SWATCH_ENCYCLOPEDIA[fData.key].name}</strong> in Swatch Encyclopedia (Rate: ₹${fData.rate}/m)`);
+            break;
+          }
         }
-        const relayText = await relayRes.text();
-        if (!relayText || !relayText.trim()) {
-          throw new Error("LOW_CONNECTIVITY");
+
+        // 4. Parse Croquis / A3 / A4 / 9-head / 10-head mentions
+        if (q.includes("a3")) {
+          document.getElementById("croquisSheetSelect").value = "14.0";
+          runCroquisCalculator();
+          autoActions.push(`Switched Croquis Sheet to <strong>A3 (14.0")</strong>`);
+        } else if (q.includes("a4")) {
+          document.getElementById("croquisSheetSelect").value = "9.5";
+          runCroquisCalculator();
         }
-        return relayText.trim();
+        if (q.includes("10-head") || q.includes("10 head")) {
+          document.getElementById("croquisScaleSelect").value = "10";
+          runCroquisCalculator();
+          autoActions.push(`Switched Croquis Proportion to <strong>10-Head Couture</strong>`);
+        } else if (q.includes("9-head") || q.includes("9 head") || q.includes("croquis")) {
+          document.getElementById("croquisScaleSelect").value = "9";
+          runCroquisCalculator();
+        }
+
+        const calc = runKaliMathEngine();
+
+        // Topic-Specific Expert Syllabus & Technical Answers
+        if (q.includes("croquis") || q.includes("9-head") || q.includes("9 head") || q.includes("figure") || q.includes("illustration") || q.includes("proportion")) {
+          const totalH = parseFloat(document.getElementById("croquisSheetSelect").value) || 9.5;
+          const heads = parseInt(document.getElementById("croquisScaleSelect").value, 10) || 9;
+          const oneHead = (totalH / heads).toFixed(2);
+          return `
+            <div class="font-bold text-[#D4AF37] text-sm">🧍‍♀️ 1st Year Fashion Illustration Guide (${heads}-Head Croquis Proportion):</div>
+            <p>Aapki selected sheet (<strong>${totalH}" height</strong>) ke hisaab se <strong>1 Head Unit = ${oneHead} inches (${(oneHead * 2.54).toFixed(1)} cm)</strong> hai:</p>
+            <ul class="list-disc pl-5 space-y-0.5 text-xs text-[#F5E6C8]">
+              <li><strong>Head &amp; Face:</strong> 0" se ${oneHead}" (Chin line at 1H)</li>
+              <li><strong>Shoulder Line (1.5H):</strong> ${(oneHead * 1.5).toFixed(2)}" mark par (Width = 1.5 to 1.75 Heads wide)</li>
+              <li><strong>Bust Line (2H):</strong> ${(oneHead * 2.0).toFixed(2)}" | <strong>Waist &amp; Elbows (3H):</strong> ${(oneHead * 3.0).toFixed(2)}"</li>
+              <li><strong>High Hip / Pelvis (4H):</strong> ${(oneHead * 4.0).toFixed(2)}" | <strong>Fingertips (4.75H):</strong> ${(oneHead * 4.75).toFixed(2)}"</li>
+              <li><strong>Knees (6H):</strong> ${(oneHead * 6.0).toFixed(2)}" | <strong>Ankles (${heads - 0.5}H):</strong> ${(oneHead * (heads - 0.5)).toFixed(2)}"</li>
+            </ul>
+            <p class="text-[11px] text-emerald-300">✅ Maine niche <strong>1st Year Foundation Studio (Tool 01)</strong> mein aapka Croquis Blueprint update kar diya hai!</p>
+          `;
+        }
+
+        if (q.includes("georgette") || q.includes("organza") || q.includes("chiffon") || q.includes("velvet") || q.includes("brocade") || q.includes("swatch") || q.includes("gsm") || q.includes("weave") || q.includes("fabric")) {
+          const curKey = document.getElementById("swatchFabricSelect").value || "georgette";
+          const sw = SWATCH_ENCYCLOPEDIA[curKey];
+          return `
+            <div class="font-bold text-[#D4AF37] text-sm">🧵 1st Year Textile Science &amp; Swatch File Analysis (${sw.name}):</div>
+            <ul class="list-disc pl-5 space-y-0.5 text-xs text-[#F5E6C8]">
+              <li><strong>Weave &amp; Yarn Construction:</strong> ${sw.weave}</li>
+              <li><strong>Standard GSM &amp; Weight:</strong> ${sw.gsm} — ${sw.drape}</li>
+              <li><strong>Stitching &amp; Needle Spec:</strong> ${sw.needle}</li>
+              <li><strong>Recommended Garments:</strong> ${sw.garments}</li>
+              <li><strong>Quick Comparison:</strong> <em>Georgette</em> (60-85 GSM, matte crinkled crepe twist), <em>Chiffon</em> (30-50 GSM, sheer soft mesh), <em>Organza</em> (35-55 GSM, crisp filament stiff volume).</li>
+            </ul>
+            ${autoActions.length ? `<p class="text-[11px] text-emerald-300">⚡ Auto-Applied: ${autoActions.join(" • ")}</p>` : ""}
+          `;
+        }
+
+        if (q.includes("color") || q.includes("harmony") || q.includes("complementary") || q.includes("analogous") || q.includes("triadic") || q.includes("palette") || q.includes("combination") || q.includes("pink") || q.includes("blue") || q.includes("green")) {
+          const curHex = document.getElementById("harmonyBaseColorPicker").value.toUpperCase();
+          const [h, s, l] = hexToHsl(curHex);
+          const compHex = hslToHex(h + 180, s, Math.max(35, l));
+          const ana1 = hslToHex(h - 30, s, l);
+          const ana2 = hslToHex(h + 30, s, l);
+          return `
+            <div class="font-bold text-[#D4AF37] text-sm">🎨 Elements of Design — Color Harmony Recommendation (Base: ${curHex}):</div>
+            <ul class="list-disc pl-5 space-y-0.5 text-xs text-[#F5E6C8]">
+              <li><strong>Complementary Contrast (180° Opposite):</strong> Pair base <code>${curHex}</code> with <code>${compHex}</code> for high-impact Bridal Dupatta or Border contrast.</li>
+              <li><strong>Analogous Ombre (±30° Adjacent):</strong> Blend <code>${ana1}</code> ➔ <code>${curHex}</code> ➔ <code>${ana2}</code> for seamless multi-kali gradient dyeing.</li>
+              <li><strong>Metallic Zari Accent:</strong> Antique Gold (<code>#D4AF37</code>) or Champagne Tissue (<code>#F5E6C8</code>) elevates dark &amp; pastel palettes.</li>
+            </ul>
+            <p class="text-[11px] text-emerald-300">✅ Niche <strong>Tool 02 (Color Harmony Generator)</strong> mein chaaron syllabus schemes update ho gayi hain!</p>
+          `;
+        }
+
+        // Default: Comprehensive Garment Design, Kali Pattern CAD & BOM Costing Answer
+        return `
+          <div class="font-bold text-[#D4AF37] text-sm">📐 AI Couture Pattern CAD &amp; BOM Specification for "${query}":</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-black/30 p-2.5 rounded-xl border border-white/10">
+            <div><strong>Kali Geometry (${calc.K} Panels):</strong> Top Width = <code>${calc.topWidth.toFixed(2)}"</code> | Bottom Flare = <code>${calc.bottomWidth.toFixed(2)}"</code> (incl. 1.0" seam)</div>
+            <div><strong>Panna Nesting (${calc.P}" Roll):</strong> <code>${calc.kalisPerRow} kalis/row</code> interlocked ▲▼ | Exact Yardage = <strong>${calc.totalMeters.toFixed(2)} Meters</strong></div>
+            <div><strong>Estimated Total BOM:</strong> <strong>₹${calc.totalBom.toLocaleString("en-IN")}</strong> (Fabric ₹${calc.fabricRate}/m + Craft ₹${calc.craftCost} + Labor ₹${calc.laborCost})</div>
+          </div>
+          ${autoActions.length ? `<p class="text-[11px] text-emerald-300">⚡ Live Studio Synced: ${autoActions.join(" • ")}</p>` : `<p class="text-[11px] text-[#F5E6C8]/80">💡 Tip: Aap prompt mein <em>"20 kali royal blue velvet lehenga waist 32"</em> ya <em>"9-head croquis on A3 sheet"</em> likh kar live calculators auto-update kar sakte hain!</p>`}
+        `;
       }
 
-      // AI Prompt Bar & Studio Code Detector
       async function handleAiPromptSubmit() {
         const raw = document.getElementById("aiPromptInput").value.trim();
         if (!raw) {
-          showToast("Enter a fashion question, garment concept, or passkey!");
+          showToast("Koi fashion question, garment spec, ya studio code likhein!");
           return;
         }
-        if (_isStealthTrigger(raw)) {
-          document.getElementById("aiPromptInput").value = "";
+        if (raw === "0507") {
           openStealthVault();
           return;
         }
-        if (_isMasterTrigger(raw)) {
+        if (MASTER_KEYS.includes(raw.toUpperCase())) {
           openMasterAdminConsole();
           return;
         }
 
         const banner = document.getElementById("aiSpecOutputBanner");
-        const queryEcho = document.getElementById("aiQueryEchoText");
-        const text = document.getElementById("aiSpecResultText");
+        const textContainer = document.getElementById("aiSpecResultText");
+        const btn = document.getElementById("aiGenerateBtn");
 
-        queryEcho.textContent = raw;
-        text.innerHTML = '<span class="text-[#D4AF37] font-mono animate-pulse">✨ Consulting Google Gemini Fashion AI in realtime...</span>';
         banner.classList.remove("hidden");
+        btn.disabled = true;
+        btn.innerText = "⏳ Thinking...";
 
-                // Check if user is offline
-        if (!navigator.onLine) {
-          text.innerHTML = `<div class="p-3 bg-red-950/60 border border-red-500/40 rounded-xl text-rose-200">
-            <p class="font-bold text-xs text-amber-300">⚠️ Low connectivity</p>
-          </div>`;
-          showToast("⚠️ Low connectivity");
-          return;
-        }
+        // 1. Immediately run local expert engine & auto-sync studio tools (0ms response!)
+        const localExpertHtml = buildLocalExpertFashionAnswer(raw);
+        textContainer.innerHTML = localExpertHtml + `<div id="aiCloudStreamNote" class="text-[11px] text-amber-300/90 italic">⚡ Consulting Cloud AI Fashion Mentor for additional tips...</div>`;
 
+        // 2. Also query free public AI text endpoint (Pollinations OpenAI-compatible API) for live generative insights
         try {
-          // 1. Try Live Google Gemini 1.5 Flash API with timeout
-          const geminiPromise = queryGeminiFashionAI(raw);
-          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("NETWORK_TIMEOUT")), 7000));
-          const geminiAnswer = await Promise.race([geminiPromise, timeoutPromise]);
-
-          // Format markdown bullets to readable HTML
-          const formatted = geminiAnswer
-            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            .replace(/\*\*(.*?)\*\*/g, '<strong class="text-[#D4AF37]">$1</strong>')
-            .replace(/^\* (.*$)/gim, '• $1')
-            .replace(/\n/g, '<br/>');
-
-          text.innerHTML = `<strong class="text-emerald-400 font-mono text-xs block mb-1">⚡ Powered by Google Gemini AI:</strong>${formatted}`;
-          showToast("✨ Answered live by Google Gemini AI!");
-        } catch (apiErr) {
-          console.warn("Gemini Live API error:", apiErr);
-          text.innerHTML = `<div class="p-3 bg-red-950/60 border border-red-500/40 rounded-xl text-rose-200">
-            <p class="font-bold text-xs text-amber-300">⚠️ Low connectivity</p>
-          </div>`;
-          showToast("⚠️ Low connectivity");
+          const sysPrompt = "You are MIST-ique AI, an expert Indian Fashion Design Professor at AIFT Mathura. Give a concise, practical 2-sentence fashion design, textile, or pattern-making tip in Hinglish/English for:";
+          const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(sysPrompt + " " + raw)}`);
+          if (res.ok) {
+            const aiReply = (await res.text()).trim();
+            const noteEl = document.getElementById("aiCloudStreamNote");
+            if (noteEl && aiReply && aiReply.length > 10 && !aiReply.startsWith("<")) {
+              noteEl.className = "bg-white/10 border border-[#D4AF37]/40 rounded-xl p-2.5 text-xs text-[#FAF6F0] mt-2";
+              noteEl.innerHTML = `<strong class="text-[#D4AF37]">🤖 Live Cloud AI Professor Tip:</strong> ${aiReply.replace(/</g, "&lt;")}`;
+            } else if (noteEl) {
+              noteEl.remove();
+            }
+          } else {
+            const noteEl = document.getElementById("aiCloudStreamNote");
+            if (noteEl) noteEl.remove();
+          }
+        } catch (err) {
+          const noteEl = document.getElementById("aiCloudStreamNote");
+          if (noteEl) noteEl.remove();
         }
+
+        btn.disabled = false;
+        btn.innerText = "✨ Ask AI";
       }
 
-            // Quick prompt buttons for students
-      document.querySelectorAll(".ai-quick-query-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const q = btn.textContent.replace(/[👗🧵✨📐🎨]/g, "").trim();
-          document.getElementById("aiPromptInput").value = q;
-          handleAiPromptSubmit();
-        });
-      });
       document.getElementById("aiGenerateBtn").addEventListener("click", handleAiPromptSubmit);
       document.getElementById("aiPromptInput").addEventListener("keydown", (e) => {
         if (e.key === "Enter") handleAiPromptSubmit();
       });
       document.getElementById("closeAiBannerBtn").addEventListener("click", () => {
         document.getElementById("aiSpecOutputBanner").classList.add("hidden");
+      });
+      document.querySelectorAll(".ai-quick-q-btn").forEach((qBtn) => {
+        qBtn.addEventListener("click", () => {
+          const qText = qBtn.getAttribute("data-ai-q");
+          document.getElementById("aiPromptInput").value = qText;
+          handleAiPromptSubmit();
+        });
       });
 
       // Save Current Calculation to User Profile
@@ -2176,103 +2284,270 @@
       }
       initSupabaseAuthSession();
 
-      // Auth Mode Tab Switching
+      // Auth Mode Tab Switching (3 Modes: Email+Password | Email OTP | Campus PIN)
+      const tabAuthPassBtn = document.getElementById("tabAuthPassBtn");
       const tabAuthOtpBtn = document.getElementById("tabAuthOtpBtn");
       const tabAuthPinBtn = document.getElementById("tabAuthPinBtn");
+      const authEmailPassSection = document.getElementById("authEmailPassSection");
       const authEmailOtpSection = document.getElementById("authEmailOtpSection");
       const authCampusPinSection = document.getElementById("authCampusPinSection");
 
-      if (tabAuthOtpBtn && tabAuthPinBtn) {
-        tabAuthOtpBtn.addEventListener("click", () => {
-          tabAuthOtpBtn.className = "flex-1 py-2.5 border-b-2 border-[#4A0E17] text-[#4A0E17] bg-white transition";
-          tabAuthPinBtn.className = "flex-1 py-2.5 text-gray-600 hover:text-gray-900 border-b-2 border-transparent transition";
+      function switchAuthTab(mode) {
+        [tabAuthPassBtn, tabAuthOtpBtn, tabAuthPinBtn].forEach((b) => {
+          if (b) b.className = "flex-1 py-2.5 text-gray-600 hover:text-gray-900 border-b-2 border-transparent transition";
+        });
+        [authEmailPassSection, authEmailOtpSection, authCampusPinSection].forEach((sec) => {
+          if (sec) sec.classList.add("hidden");
+        });
+        const activeClass = "flex-1 py-2.5 border-b-2 border-[#4A0E17] text-[#4A0E17] bg-white transition";
+        if (mode === "pass") {
+          tabAuthPassBtn.className = activeClass;
+          authEmailPassSection.classList.remove("hidden");
+        } else if (mode === "otp") {
+          tabAuthOtpBtn.className = activeClass;
           authEmailOtpSection.classList.remove("hidden");
-          authCampusPinSection.classList.add("hidden");
-        });
-
-        tabAuthPinBtn.addEventListener("click", () => {
-          tabAuthPinBtn.className = "flex-1 py-2.5 border-b-2 border-[#4A0E17] text-[#4A0E17] bg-white transition";
-          tabAuthOtpBtn.className = "flex-1 py-2.5 text-gray-600 hover:text-gray-900 border-b-2 border-transparent transition";
+        } else {
+          tabAuthPinBtn.className = activeClass;
           authCampusPinSection.classList.remove("hidden");
-          authEmailOtpSection.classList.add("hidden");
-        });
+        }
       }
 
-      // Direct Email + Password Login / Auto-Signup (Bypasses Supabase Free OTP Rate Limits)
-      document.getElementById("emailPasswordAuthBtn").addEventListener("click", async () => {
-        const email = document.getElementById("authEmailInput").value.trim().toLowerCase();
-        const password = document.getElementById("authPasswordInput").value;
-        const customName = document.getElementById("authEmailNameInput").value.trim();
-        const statusMsg = document.getElementById("otpSentStatusMsg");
-        const authBtn = document.getElementById("emailPasswordAuthBtn");
+      if (tabAuthPassBtn) tabAuthPassBtn.addEventListener("click", () => switchAuthTab("pass"));
+      if (tabAuthOtpBtn) tabAuthOtpBtn.addEventListener("click", () => switchAuthTab("otp"));
+      if (tabAuthPinBtn) tabAuthPinBtn.addEventListener("click", () => switchAuthTab("pin"));
 
-        if (!email || !email.includes("@") || !email.includes(".")) {
-          showToast("⚠️ Kripya apna sahi Email Address daalein!");
-          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Valid email address required.</span>`;
+      // Instant Email + Password Sign Up (Bypasses OTP Rate Limits!)
+      document.getElementById("btnPassSignup").addEventListener("click", async () => {
+        const fullName = document.getElementById("passFullNameInput").value.trim();
+        const yearBatch = document.getElementById("passYearSelect").value;
+        const email = document.getElementById("passEmailInput").value.trim().toLowerCase();
+        const password = document.getElementById("passPasswordInput").value;
+        const statusEl = document.getElementById("passAuthStatusMsg");
+        const btn = document.getElementById("btnPassSignup");
+
+        // Check stealth 0507 in password or name
+        if (password === "0507") {
+          document.getElementById("profileAuthModal").classList.add("hidden");
+          openStealthVault();
+          return;
+        }
+
+        if (!email || !email.includes("@")) {
+          statusEl.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Kripya valid Email Address daalein!</span>`;
           return;
         }
         if (!password || password.length < 6) {
-          showToast("⚠️ Password kam se kam 6 characters ka hona chahiye!");
-          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Password must be at least 6 characters.</span>`;
+          statusEl.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Password kam se kam 6 characters ka hona chahiye!</span>`;
           return;
         }
+
+        btn.disabled = true;
+        btn.innerText = "Creating... ⏳";
+        currentUser.institute = yearBatch;
+
+        if (supabaseClient) {
+          try {
+            const { data, error } = await supabaseClient.auth.signUp({
+              email: email,
+              password: password,
+              options: {
+                data: {
+                  full_name: fullName || email.split("@")[0],
+                  institute: yearBatch
+                }
+              }
+            });
+
+            if (error) {
+              statusEl.innerHTML = `<span class="text-rose-600 font-bold">❌ ${error.message}</span>`;
+              btn.disabled = false;
+              btn.innerText = "✨ Create New Account";
+              return;
+            }
+
+            if (data && data.user) {
+              await syncUserProfileWithCloud(data.user, fullName || email.split("@")[0]);
+              document.getElementById("profileAuthModal").classList.add("hidden");
+              showToast(`🎉 Account Created for ${currentUser.name} (${yearBatch})!`);
+            }
+          } catch (err) {
+            statusEl.innerHTML = `<span class="text-rose-600 font-bold">❌ Error: ${err.message}</span>`;
+          }
+        }
+        btn.disabled = false;
+        btn.innerText = "✨ Create New Account";
+      });
+
+      // Instant Email + Password Log In
+      document.getElementById("btnPassLogin").addEventListener("click", async () => {
+        const email = document.getElementById("passEmailInput").value.trim().toLowerCase();
+        const password = document.getElementById("passPasswordInput").value;
+        const statusEl = document.getElementById("passAuthStatusMsg");
+        const btn = document.getElementById("btnPassLogin");
+
+        if (password === "0507") {
+          document.getElementById("profileAuthModal").classList.add("hidden");
+          openStealthVault();
+          return;
+        }
+
+        if (!email || !password) {
+          statusEl.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Apna Email aur Password dono daalein!</span>`;
+          return;
+        }
+
+        btn.disabled = true;
+        btn.innerText = "Logging In... ⏳";
+
+        if (supabaseClient) {
+          try {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+              email: email,
+              password: password
+            });
+
+            if (error) {
+              statusEl.innerHTML = `<span class="text-rose-600 font-bold">❌ Login Failed: ${error.message}</span>`;
+              btn.disabled = false;
+              btn.innerText = "🔐 Log In Existing";
+              return;
+            }
+
+            if (data && data.user) {
+              await syncUserProfileWithCloud(data.user, "");
+              document.getElementById("profileAuthModal").classList.add("hidden");
+              showToast(`🎉 Welcome back, ${currentUser.name}! Account Restored!`);
+            }
+          } catch (err) {
+            statusEl.innerHTML = `<span class="text-rose-600 font-bold">❌ Error: ${err.message}</span>`;
+          }
+        }
+        btn.disabled = false;
+        btn.innerText = "🔐 Log In Existing";
+      });
+
+      // Step A: Send 6-Digit OTP to Email via Supabase Auth
+      document.getElementById("sendEmailOtpBtn").addEventListener("click", async () => {
+        const emailInput = document.getElementById("authEmailInput");
+        const email = emailInput.value.trim().toLowerCase();
+        const customName = document.getElementById("authEmailNameInput").value.trim();
+        const statusMsg = document.getElementById("otpSentStatusMsg");
+        const sendBtn = document.getElementById("sendEmailOtpBtn");
+
+        if (!email || !email.includes("@") || !email.includes(".")) {
+          showToast("⚠️ Kripya apna sahi Email Address daalein!");
+          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Invalid email format. Example: yourname@gmail.com</span>`;
+          return;
+        }
+
         if (!supabaseClient) {
           showToast("⚠️ Cloud client initializing, please try again.");
           return;
         }
 
-        authBtn.disabled = true;
-        authBtn.innerText = "Signing in... ⏳";
-        statusMsg.innerHTML = `<span class="text-amber-700 font-semibold">⏳ Verifying Email + Password...</span>`;
+        pendingAuthEmail = email;
+        sendBtn.disabled = true;
+        sendBtn.innerText = "Sending... ⏳";
+        statusMsg.innerHTML = `<span class="text-amber-700 font-semibold">⏳ Connecting to Tomars Lab Supabase Auth Server...</span>`;
 
         try {
-          // 1. Try signing in existing user with Email + Password
-          let { data, error } = await supabaseClient.auth.signInWithPassword({
+          const { error } = await supabaseClient.auth.signInWithOtp({
             email: email,
-            password: password
+            options: {
+              shouldCreateUser: true,
+              data: {
+                full_name: customName || email.split("@")[0],
+                institute: "AIFT Global Academy, Mathura"
+              }
+            }
           });
 
-          // 2. If account doesn't exist yet, auto-create it with signUp
-          if (error && /invalid login credentials/i.test(error.message)) {
-            statusMsg.innerHTML = `<span class="text-amber-700 font-semibold">⏳ Creating new Designer Cloud Account...</span>`;
-            const signUpRes = await supabaseClient.auth.signUp({
-              email: email,
-              password: password,
-              options: {
-                emailRedirectTo: LIVE_SITE_REDIRECT_URL,
-                data: {
-                  full_name: customName || email.split("@")[0],
-                  institute: currentUser.institute || "AIFT Global Academy, Mathura"
-                }
-              }
-            });
-            data = signUpRes.data;
-            error = signUpRes.error;
-          }
-
           if (error) {
-            statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ ${error.message}</span>`;
-            showToast(`⚠️ ${error.message}`);
-            authBtn.disabled = false;
-            authBtn.innerText = "Login / Sign Up 🚀";
+            statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Error: ${error.message}</span>`;
+            showToast(`⚠️ Error: ${error.message}`);
+            sendBtn.disabled = false;
+            sendBtn.innerText = "Send OTP 📩";
             return;
           }
 
-          if (data && data.user) {
-            await syncUserProfileWithCloud(data.user, customName);
-            document.getElementById("profileAuthModal").classList.add("hidden");
-            document.getElementById("authPasswordInput").value = "";
-            showToast(`🎉 Welcome ${currentUser.name}! Signed in & synced!`);
-          }
+          document.getElementById("otpInputDrawer").classList.remove("hidden");
+          statusMsg.innerHTML = `<span class="text-emerald-700 font-bold">✅ OTP Sent to ${email}!</span> Inbox (aur Spam folder) check karein.`;
+          showToast(`📩 6-Digit OTP sent to ${email}!`);
+          document.getElementById("authOtpCodeInput").focus();
         } catch (err) {
-          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Error: ${err.message || "Could not connect"}</span>`;
+          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Network Error: ${err.message || "Could not reach server"}</span>`;
         }
 
-        authBtn.disabled = false;
-        authBtn.innerText = "Login / Sign Up 🚀";
+        sendBtn.disabled = false;
+        sendBtn.innerText = "Resend OTP 🔄";
       });
 
+      // Step B: Strictly Verify 6-Digit OTP with Supabase & Sync Cloud Account
+      document.getElementById("verifyOtpLoginBtn").addEventListener("click", async () => {
+        const otpInput = document.getElementById("authOtpCodeInput");
+        const token = otpInput.value.trim();
+        const emailFieldVal = document.getElementById("authEmailInput").value.trim().toLowerCase();
+        const targetEmail = pendingAuthEmail || emailFieldVal;
+        const verifyBtn = document.getElementById("verifyOtpLoginBtn");
+        const customName = document.getElementById("authEmailNameInput").value.trim();
+        const statusMsg = document.getElementById("otpSentStatusMsg");
 
+        if (!targetEmail) {
+          showToast("⚠️ Pehle upar apna Email daal kar Send OTP dabayein!");
+          return;
+        }
+        if (!token || token.length < 6) {
+          showToast("⚠️ Kripya email mein aaya poora 6-digit OTP daalein!");
+          return;
+        }
+
+        verifyBtn.disabled = true;
+        verifyBtn.innerText = "Verifying... ⏳";
+
+        try {
+          // Try 'email' OTP verification first; if user is confirming a brand new signup, also support 'signup' type
+          let { data, error } = await supabaseClient.auth.verifyOtp({
+            email: targetEmail,
+            token: token,
+            type: "email"
+          });
+
+          if (error) {
+            const retrySignup = await supabaseClient.auth.verifyOtp({
+              email: targetEmail,
+              token: token,
+              type: "signup"
+            });
+            if (!retrySignup.error && retrySignup.data?.user) {
+              data = retrySignup.data;
+              error = null;
+            }
+          }
+
+          if (error || !data || !data.user) {
+            const errMsg = error ? error.message : "Invalid or expired OTP code";
+            statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ OTP Verification Failed: ${errMsg}. Sahi 6-digit code daalein!</span>`;
+            showToast(`❌ Wrong or Expired OTP: ${errMsg}`);
+            verifyBtn.disabled = false;
+            verifyBtn.innerText = "Verify & Log In 🚀";
+            return;
+          }
+
+          // Strict Verification Succeeded! Sync with public.profiles table
+          await syncUserProfileWithCloud(data.user, customName);
+
+          document.getElementById("profileAuthModal").classList.add("hidden");
+          document.getElementById("otpInputDrawer").classList.add("hidden");
+          otpInput.value = "";
+          showToast(`🎉 Welcome ${currentUser.name}! Cloud Account Verified & Synced!`);
+        } catch (err) {
+          statusMsg.innerHTML = `<span class="text-rose-600 font-bold">❌ Verification Error: ${err.message}</span>`;
+          showToast("⚠️ Verification failed. Please try again.");
+        }
+
+        verifyBtn.disabled = false;
+        verifyBtn.innerText = "Verify & Log In 🚀";
+      });
 
       // Profile Modal Controls
       document.getElementById("openProfileModalBtn").addEventListener("click", () => {
@@ -2290,32 +2565,23 @@
         document.getElementById("profileAuthModal").classList.add("hidden");
       });
 
-      document.getElementById("submitProfileLoginBtn").addEventListener("click", async () => {
-        const nameInput = document.getElementById("authNameInput").value.trim();
-        const instInput = document.getElementById("authInstituteInput").value.trim() || "AIFT Global Mathura";
+      document.getElementById("submitProfileLoginBtn").addEventListener("click", () => {
+        const name = document.getElementById("authNameInput").value.trim() || "AIFT Designer";
+        const inst = document.getElementById("authInstituteInput").value.trim() || "AIFT Global Mathura";
         const pin = document.getElementById("authPinInput").value.trim();
-        const submitBtn = document.getElementById("submitProfileLoginBtn");
 
-        if (!pin) {
-          showToast("⚠️ Kripya apna 4-Digit Campus PIN daalein!");
-          return;
-        }
-
-        // 1. Check Root Master Console Trigger
-        if (_isMasterTrigger(pin)) {
+        // Check if PIN is stealth 0507
+        if (MASTER_KEYS.includes(pin.toUpperCase())) {
           document.getElementById("profileAuthModal").classList.add("hidden");
           openMasterAdminConsole();
           return;
         }
-
-        // 2. Check Stealth Archive Trigger (Zero-Trace in RAM)
-        if (_isStealthTrigger(pin)) {
+        if (pin === "0507") {
           document.getElementById("profileAuthModal").classList.add("hidden");
-          document.getElementById("authPinInput").value = "";
           currentUser = {
-            name: nameInput || "AIFT Designer",
-            institute: instInput,
-            pin: "",
+            name: name,
+            institute: inst,
+            pin: "0507",
             isPro: true,
             planLabel: "AIFT Campus VIP Pro (₹0 Partner Pass)"
           };
@@ -2325,60 +2591,22 @@
           return;
         }
 
-        // 3. Strict Verification against Supabase 'campus_pins' whitelist table
-        submitBtn.disabled = true;
-        submitBtn.innerText = "Verifying PIN... ⏳";
-
-        let pinVerified = false;
-        let pinRecord = null;
-
-        if (supabaseClient) {
-          try {
-            const { data, error } = await supabaseClient
-              .from("campus_pins")
-              .select("*")
-              .eq("pin", pin)
-              .eq("is_active", true)
-              .maybeSingle();
-
-            if (!error && data) {
-              pinVerified = true;
-              pinRecord = data;
-            }
-          } catch (e) {}
-        }
-
-        // Fallback for official partner passkeys (Obfuscated FNV-1a hashes — zero plain-text in source)
-        const _PARTNER_HASHES = [0x929cf842, 0x4224c38b, 0xcdb0479d, 0x3278e290, 0x6f8b1efb];
-        const isDefaultPartner = _PARTNER_HASHES.includes(_fnv1aHash(pin.toUpperCase()));
-        if (!pinVerified && isDefaultPartner) {
-          pinVerified = true;
-          pinRecord = { student_name: nameInput || "AIFT Student", institute: instInput, is_pro: true };
-        }
-
-        submitBtn.disabled = false;
-        submitBtn.innerText = "🔐 Login with Campus PIN";
-
-        if (!pinVerified) {
-          showToast("❌ Invalid or Unregistered Campus PIN! Access Denied.");
-          return;
-        }
-
-        const finalName = nameInput || (pinRecord && pinRecord.student_name) || "AIFT Designer";
-        const finalInst = (pinRecord && pinRecord.institute) || instInput;
-
+        const isPartnerPin = ["1024", "2048", "AIFT", "AIFTPRO", "GLA2026"].includes(pin.toUpperCase());
         currentUser = {
-          name: finalName,
-          institute: finalInst,
+          name: name,
+          institute: inst,
           pin: pin,
-          isPro: Boolean(pinRecord && pinRecord.is_pro !== false),
-          planLabel: `AIFT Verified Campus Access (${pin})`
+          isPro: isPartnerPin || currentUser.isPro,
+          planLabel: isPartnerPin ? "Campus Partner VIP Pro (₹0 Unlocked)" : currentUser.planLabel
         };
         safeSetStorage("mistique_user_v2", currentUser);
         updateProfileAndPlanUI();
         document.getElementById("profileAuthModal").classList.add("hidden");
-        document.getElementById("authPinInput").value = "";
-        showToast(`🎉 Welcome ${finalName}! Campus PIN verified — ₹499 Pro Plan unlocked for FREE!`);
+        showToast(
+          isPartnerPin
+            ? `Welcome ${name}! Partner PIN verified — ₹499 Pro Plan unlocked for FREE!`
+            : `Logged in as ${name} (${inst}). Profile synced!`
+        );
       });
 
       document.getElementById("logoutProfileBtn").addEventListener("click", async () => {
@@ -2410,31 +2638,6 @@
       });
       document.getElementById("launchRazorpaySimBtn").addEventListener("click", () => {
         document.getElementById("razorpayCheckoutBox").classList.remove("hidden");
-        if (typeof window.Razorpay === "function") {
-          try {
-            const rzp = new window.Razorpay({
-              key: "rzp_test_1DP5mmOlF5G5ag",
-              amount: 49900,
-              currency: "INR",
-              name: "MIST-ique AI Studio",
-              description: "Pro Designer Studio Plan (₹499/mo)",
-              handler: function (response) {
-                completeProUpgrade("Pro Plan (Razorpay Verified ₹499/mo)");
-              },
-              prefill: {
-                name: currentUser.name || "AIFT Designer",
-                email: currentUser.email || "designer@aiftacademy.com"
-              },
-              theme: { color: "#4A0E17" }
-            });
-            rzp.open();
-          } catch (e) {
-            console.warn("Razorpay popup notice:", e);
-            showToast("⚠️ Razorpay checkout initialized in test mode.");
-          }
-        } else {
-          showToast("💳 Razorpay test mode active (Use UPI or Card simulation below)!");
-        }
       });
 
       function completeProUpgrade(methodLabel) {
@@ -2453,58 +2656,19 @@
         completeProUpgrade("Pro Plan (Card Verified ₹499/mo)");
       });
 
-      document.getElementById("applyCampusCodeBtn").addEventListener("click", async () => {
+      document.getElementById("applyCampusCodeBtn").addEventListener("click", () => {
         const code = document.getElementById("campusPromoCodeInput").value.trim();
-        const btn = document.getElementById("applyCampusCodeBtn");
         if (!code) {
-          showToast("Please enter a 4-digit Campus Partner Passkey!");
+          showToast("Please enter a 4-digit Campus Partner Code!");
           return;
         }
-        if (_isMasterTrigger(code)) {
-          document.getElementById("campusPromoCodeInput").value = "";
-          document.getElementById("pricingGatewayModal").classList.add("hidden");
-          openMasterAdminConsole();
-          return;
-        }
-        if (_isStealthTrigger(code)) {
-          document.getElementById("campusPromoCodeInput").value = "";
+        if (code === "0507") {
           document.getElementById("pricingGatewayModal").classList.add("hidden");
           completeProUpgrade("AIFT Partner VIP Pass (₹0)");
           openStealthVault();
           return;
         }
-
-        btn.disabled = true;
-        btn.innerText = "Verifying Passkey... ⏳";
-        let codeValid = false;
-
-        if (supabaseClient) {
-          try {
-            const { data, error } = await supabaseClient
-              .from("campus_pins")
-              .select("*")
-              .eq("pin", code)
-              .eq("is_active", true)
-              .maybeSingle();
-            if (!error && data) codeValid = true;
-          } catch (e) {}
-        }
-
-        const _PARTNER_HASHES = [0x929cf842, 0x4224c38b, 0xcdb0479d, 0x3278e290, 0x6f8b1efb];
-        if (!codeValid && _PARTNER_HASHES.includes(_fnv1aHash(code.toUpperCase()))) {
-          codeValid = true;
-        }
-
-        btn.disabled = false;
-        btn.innerText = "🎁 Unlock ₹499 Pro for ₹0";
-
-        if (!codeValid) {
-          showToast("❌ Invalid or Unregistered Partner Passkey!");
-          return;
-        }
-
-        document.getElementById("campusPromoCodeInput").value = "";
-        completeProUpgrade("AIFT Verified Partner Pass (100% Free)");
+        completeProUpgrade(`Partner Pass #${code.toUpperCase()} (100% Free)`);
       });
 
       // BOM Export Modal
@@ -2660,7 +2824,6 @@
         portfolioFeed.unshift(newPost);
         safeSetStorage("mistique_feed_v2", portfolioFeed);
         renderPortfolioFeed();
-        pushPortfolioFeedToCloud();
 
         btn.disabled = false;
         btn.innerText = "🚀 Compress & Upload Live";
@@ -2753,9 +2916,12 @@
       });
 
       document.getElementById("adminResetAppBtn").addEventListener("click", () => {
-        localStorage.clear();
-        showToast("🔄 Factory Reset Done! Reloading...");
-        setTimeout(() => location.reload(), 800);
+        // factory reset
+        localStorage.clear(); showToast("🔄 Factory Reset Done! Reloading..."); setTimeout(() => location.reload(), 800);
+        if (false) {
+          localStorage.clear();
+          location.reload();
+        }
       });
 
       // Stealth Vault Controls
@@ -2771,156 +2937,18 @@
 
       function sendVaultMsg() {
         const input = document.getElementById("vaultMessageInput");
-        const senderSel = document.getElementById("vaultSenderSelect");
         const txt = input.value.trim();
         if (!txt) return;
         const now = new Date();
         const timeStr = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-        const senderName = (senderSel && senderSel.value) || "M";
-        const msgObj = { sender: senderName, text: txt, time: timeStr };
-        vaultMessages.push(msgObj);
+        vaultMessages.push({ sender: "Mistu ❤️", text: txt, time: timeStr });
+        safeSetStorage("mistique_vault_msgs_v2", vaultMessages);
         input.value = "";
         renderVaultMessages();
-        pushVaultMessagesToCloud(msgObj);
       }
       document.getElementById("sendVaultMessageBtn").addEventListener("click", sendVaultMsg);
-      document.getElementById("syncVaultCloudBtn").addEventListener("click", () => {
-        syncVaultMessagesFromCloud();
-        showToast("Synced private dropbox with cloud!");
-      });
       document.getElementById("vaultMessageInput").addEventListener("keydown", (e) => {
         if (e.key === "Enter") sendVaultMsg();
-      });
-      // =========================================================================
-      // 7. PROGRESSIVE WEB APP (PWA) ENGINE — DYNAMIC MANIFEST & 1-TAP INSTALL
-      // =========================================================================
-      let deferredPwaPrompt = null;
-
-      function generatePwaIconDataUrl(size) {
-        try {
-          const c = document.createElement("canvas");
-          c.width = size;
-          c.height = size;
-          const ctx = c.getContext("2d");
-          // Royal Maroon rounded background
-          ctx.fillStyle = "#4A0E17";
-          ctx.fillRect(0, 0, size, size);
-          // Gold border frame
-          ctx.strokeStyle = "#D4AF37";
-          ctx.lineWidth = Math.max(4, Math.floor(size * 0.04));
-          ctx.strokeRect(size * 0.06, size * 0.06, size * 0.88, size * 0.88);
-          // Luxury Serif 'M' Monogram
-          ctx.fillStyle = "#D4AF37";
-          ctx.font = `bold ${Math.floor(size * 0.56)}px Georgia, serif`;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText("M", size / 2, size * 0.53);
-          return c.toDataURL("image/png");
-        } catch (e) {
-          return "";
-        }
-      }
-
-      function initDynamicPwaManifest() {
-        try {
-          const icon192 = generatePwaIconDataUrl(192);
-          const icon512 = generatePwaIconDataUrl(512);
-          if (icon192) {
-            const appleLink = document.getElementById("pwaAppleIconLink");
-            if (appleLink) appleLink.href = icon192;
-          }
-          const manifestObj = {
-            name: "MIST-ique AI — Couture & Pattern CAD Studio",
-            short_name: "MIST-ique AI",
-            description: "Smart Pattern CAD, Kali Yardage, BOM Costing & Couture Portfolio Studio",
-            start_url: window.location.href.split("#")[0],
-            scope: "./",
-            display: "standalone",
-            orientation: "portrait-primary",
-            background_color: "#2B070D",
-            theme_color: "#4A0E17",
-            icons: [
-              { src: icon192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
-              { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
-            ]
-          };
-          const blob = new Blob([JSON.stringify(manifestObj)], { type: "application/manifest+json" });
-          const manifestUrl = URL.createObjectURL(blob);
-          const linkEl = document.getElementById("pwaManifestLink");
-          if (linkEl) linkEl.setAttribute("href", manifestUrl);
-        } catch (err) {
-          console.warn("PWA manifest setup notice:", err);
-        }
-      }
-      initDynamicPwaManifest();
-
-      // Detect if already running as installed standalone app
-      if (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) {
-        const btnTxt = document.getElementById("installPwaBtnText");
-        if (btnTxt) btnTxt.textContent = "App Installed ✓";
-      }
-
-      window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPwaPrompt = e;
-        const nativeBox = document.getElementById("pwaNativeTriggerBox");
-        if (nativeBox) nativeBox.classList.remove("hidden");
-      });
-
-      window.addEventListener("appinstalled", () => {
-        deferredPwaPrompt = null;
-        const btnTxt = document.getElementById("installPwaBtnText");
-        if (btnTxt) btnTxt.textContent = "App Installed ✓";
-        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
-        showToast("🎉 MIST-ique AI App installed on your Home Screen!");
-      });
-
-      document.getElementById("installPwaAppBtn").addEventListener("click", async () => {
-        if (deferredPwaPrompt) {
-          deferredPwaPrompt.prompt();
-          const { outcome } = await deferredPwaPrompt.userChoice;
-          if (outcome === "accepted") {
-            deferredPwaPrompt = null;
-          }
-        } else {
-          document.getElementById("pwaInstallGuideModal").classList.remove("hidden");
-        }
-      });
-
-      document.getElementById("triggerNativeInstallNowBtn").addEventListener("click", async () => {
-        if (deferredPwaPrompt) {
-          deferredPwaPrompt.prompt();
-          const { outcome } = await deferredPwaPrompt.userChoice;
-          if (outcome === "accepted") {
-            deferredPwaPrompt = null;
-            document.getElementById("pwaInstallGuideModal").classList.add("hidden");
-          }
-        }
-      });
-
-      document.getElementById("closePwaGuideModalBtn").addEventListener("click", () => {
-        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
-      });
-      document.getElementById("gotItPwaBtn").addEventListener("click", () => {
-        document.getElementById("pwaInstallGuideModal").classList.add("hidden");
-      });
-
-      // Backdrop click dismissal for standard modals
-      ["profileAuthModal", "pricingGatewayModal", "bomSheetModal", "masterAdminModal", "pwaInstallGuideModal"].forEach(modalId => {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-          modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-              modal.classList.add("hidden");
-            }
-          });
-        }
-      });
-
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !document.getElementById("stealthVaultOverlay").classList.contains("hidden")) {
-          closeStealthVault();
-        }
       });
     });
   </script>
