@@ -22,6 +22,12 @@
       50% { opacity: 0.45; transform: scale(1.18); }
     }
   </style>
+  <!-- PWA & MOBILE APP INSTALL SYSTEM (ONE-TAP ADD TO HOME SCREEN) -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22MIST-ique%20AI%20Studio%22%2C%22short_name%22%3A%22MIST-ique%22%2C%22description%22%3A%22Smart%20Pattern%20CAD%2C%201st-Year%20Foundation%20%26%20Couture%20Studio%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2323060B%22%2C%22theme_color%22%3A%22%23380A11%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fapi.iconify.design%2Ftwemoji%3Acrown.svg%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MIST-ique AI" />
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#6B1422] selection:text-white">
 
@@ -95,6 +101,16 @@
         >
           <span>💎</span>
           <span id="upgradeBtnText">Upgrade to Pro</span>
+        </button>
+
+        <button
+          id="pwaInstallAppBtn"
+          type="button"
+          class="bg-gradient-to-r from-[#D4AF37] via-[#f5d77f] to-[#D4AF37] hover:brightness-110 text-[#2B070D] font-black text-xs px-3.5 py-2 rounded-xl shadow-lg border border-[#D4AF37] flex items-center gap-1.5 transition transform active:scale-95"
+          title="Install MIST-ique App on Phone / Home Screen"
+        >
+          <span class="text-sm">📲</span>
+          <span>Install on Phone</span>
         </button>
 
         <button
@@ -633,6 +649,50 @@
     </div>
   </footer>
 
+  <!-- ========================================================================= -->
+  <!-- MODAL 0: 📲 NATIVE PHONE APP INSTALL GUIDE (ANDROID & IPHONE PWA)          -->
+  <!-- ========================================================================= -->
+  <div id="pwaInstallModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#1C060A] text-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-[#D4AF37] flex flex-col">
+      <div class="maroon-gradient px-5 py-4 flex items-center justify-between border-b border-[#D4AF37]/40">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">📲</span>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-bold">1-Click Phone App Download</span>
+            <h3 class="serif-heading text-lg font-bold">Install MIST-ique AI on Your Phone</h3>
+          </div>
+        </div>
+        <button id="closePwaModalBtn" type="button" class="text-white/80 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs sm:text-sm">
+        <div class="bg-white/5 border border-white/15 rounded-xl p-3.5 flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8A6611] flex items-center justify-center text-[#2B070D] font-black text-2xl shadow">
+            M
+          </div>
+          <div>
+            <div class="font-bold text-[#F5E6C8] text-sm">MIST-ique AI Couture Studio</div>
+            <div class="text-[11px] text-white/70">Works 100% Offline • No Play Store Needed • Fast 0.1s Launch</div>
+          </div>
+        </div>
+
+        <!-- Direct Trigger Button -->
+        <button id="triggerNativeInstallBtn" type="button" class="w-full bg-gradient-to-r from-[#D4AF37] to-[#e6be43] hover:brightness-110 text-[#2B070D] font-black py-3 rounded-xl shadow-xl text-sm flex items-center justify-center gap-2 transition transform active:scale-95">
+          <span>⚡</span>
+          <span>Tap to Install on Home Screen Now</span>
+        </button>
+
+        <!-- Instructions for Android & iPhone -->
+        <div class="space-y-2 text-xs bg-black/40 rounded-xl p-3.5 border border-white/10 text-white/85">
+          <div class="font-bold text-[#D4AF37] text-xs">Agar direct button se install prompt na aaye:</div>
+          <div class="space-y-1.5 text-[11px]">
+            <p><strong>🤖 Android (Chrome):</strong> Upar <strong>3 Dots (⋮)</strong> dabayein ➔ <strong>"Add to Home screen"</strong> ya <strong>"Install app"</strong> par click karein!</p>
+            <p><strong>🍎 iPhone (Safari):</strong> Niche <strong>Share Button (⬆️)</strong> dabayein ➔ Thoda scroll karke <strong>"Add to Home Screen (➕)"</strong> dabayein!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- ========================================================================= -->
   <!-- MODAL 1: CLOUD ACCOUNT, EMAIL OTP & CAMPUS AUTHENTICATION SYSTEM          -->
   <!-- ========================================================================= -->
@@ -1900,6 +1960,45 @@
     // 6. EVENT LISTENERS & INITIALIZATION
     // -------------------------------------------------------------------------
     window.addEventListener("DOMContentLoaded", () => {
+      // =========================================================================
+      // PWA 1-TAP PHONE APP INSTALL LOGIC (ANDROID / CHROME / IPHONE)
+      // =========================================================================
+      let deferredInstallPrompt = null;
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+      });
+
+      document.getElementById("pwaInstallAppBtn").addEventListener("click", () => {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          deferredInstallPrompt.userChoice.then((choice) => {
+            if (choice.outcome === "accepted") {
+              showToast("🎉 Installing MIST-ique AI on your Phone!");
+            }
+            deferredInstallPrompt = null;
+          });
+        } else {
+          document.getElementById("pwaInstallModal").classList.remove("hidden");
+        }
+      });
+
+      document.getElementById("triggerNativeInstallBtn").addEventListener("click", () => {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          deferredInstallPrompt.userChoice.then(() => {
+            deferredInstallPrompt = null;
+            document.getElementById("pwaInstallModal").classList.add("hidden");
+          });
+        } else {
+          showToast("Browser menu (⋮ ya Share) khol kar 'Add to Home Screen' karein!");
+        }
+      });
+
+      document.getElementById("closePwaModalBtn").addEventListener("click", () => {
+        document.getElementById("pwaInstallModal").classList.add("hidden");
+      });
+
       // Initial renders
       updateProfileAndPlanUI();
       runCroquisCalculator();
